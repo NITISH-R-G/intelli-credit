@@ -9,9 +9,16 @@ const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
+export const UserRole = {
+  MAKER: 'MAKER',
+  CHECKER: 'CHECKER',
+  ADMIN: 'ADMIN'
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(UserRole.CHECKER); // Mock default role for UI testing
   const router = useRouter();
   const pathname = usePathname();
 
@@ -46,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut }}>
+    <AuthContext.Provider value={{ user, userRole, loading, signOut }}>
       {!loading ? children : <div className="h-screen flex items-center justify-center">Loading...</div>}
     </AuthContext.Provider>
   );

@@ -148,44 +148,64 @@ def generate_industry_macro_data():
 
 
 if __name__ == "__main__":
+    import argparse
+    import logging
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    parser = argparse.ArgumentParser(description="Generate or load borrower dataset.")
+    parser.add_argument("--real-data", type=str, default=None, help="Path to real-world CSV dataset.")
+    args = parser.parse_args()
+
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     for d in ["data/raw", "data/curated", "data/features", "models"]:
         os.makedirs(os.path.join(base_dir, d), exist_ok=True)
 
-    print("Generating synthetic borrower dataset...")
-    df = generate_synthetic_dataset()
-    raw_path = os.path.join(base_dir, "data", "raw", "synthetic_borrowers.csv")
-    df.to_csv(raw_path, index=False)
-    print(f"  -> Saved {len(df)} records to {raw_path}")
+    if args.real_data and os.path.exists(args.real_data):
+        logger.info(f"Loading real-world dataset from {args.real_data}...")
+        df = pd.read_csv(args.real_data)
+        raw_path = args.real_data
+    else:
+        logger.info("Generating synthetic borrower dataset...")
+        df = generate_synthetic_dataset()
+        raw_path = os.path.join(base_dir, "data", "raw", "synthetic_borrowers.csv")
+        df.to_csv(raw_path, index=False)
+        logger.info(f"  -> Saved {len(df)} records to {raw_path}")
 
-    print("Generating web research data...")
-    web_data = generate_web_research_data()
+    logger.info("Generating web research data...")
+    web_data = generate_web_research_data(n_samples=len(df))
     web_path = os.path.join(base_dir, "data", "raw", "web_research.json")
     with open(web_path, "w") as f:
         json.dump(web_data, f, indent=2)
-    print(f"  -> Saved {len(web_data)} records to {web_path}")
+    logger.info(f"  -> Saved {len(web_data)} records to {web_path}")
 
-    print("Generating industry macro data...")
+    logger.info("Generating industry macro data...")
     macro_data = generate_industry_macro_data()
     macro_path = os.path.join(base_dir, "data", "raw", "industry_macro.json")
     with open(macro_path, "w") as f:
         json.dump(macro_data, f, indent=2)
-    print(f"  -> Saved to {macro_path}")
+    logger.info(f"  -> Saved to {macro_path}")
 
     curated_path = os.path.join(base_dir, "data", "curated", "borrowers_curated.csv")
-    df_curated = df[[
-        "borrower_id", "company_name", "industry", "years_in_business",
-        "revenue", "revenue_growth", "ebitda_margin", "ebitda",
-        "total_debt", "total_equity", "debt_equity_ratio",
-        "cash_flow", "annual_debt_service", "dscr",
-        "collateral_value", "collateral_coverage",
-        "bureau_score", "existing_exposure", "num_past_defaults",
-        "loan_amount_requested", "cash_flow_stability",
-        "industry_risk", "defaulted", "optimal_limit",
-        "promoter_gender", "region"
-    ]]
-    df_curated.to_csv(curated_path, index=False)
-    print(f"  -> Curated dataset saved to {curated_path}")
+    # Wrap in try block if real data is missing some columns
+    try:
+        df_curated = df[[
+            "borrower_id", "company_name", "industry", "years_in_business",
+            "revenue", "revenue_growth", "ebitda_margin", "ebitda",
+            "total_debt", "total_equity", "debt_equity_ratio",
+            "cash_flow", "annual_debt_service", "dscr",
+            "collateral_value", "collateral_coverage",
+            "bureau_score", "existing_exposure", "num_past_defaults",
+            "loan_amount_requested", "cash_flow_stability",
+            "industry_risk", "defaulted", "optimal_limit",
+            "promoter_gender", "region"
+        ]]
+        df_curated.to_csv(curated_path, index=False)
+        logger.info(f"  -> Curated dataset saved to {curated_path}")
+    except KeyError as e:
+        logger.warning(f"Real data missing exact curated columns: {e}. Saving full instead.")
+        df.to_csv(curated_path, index=False)
 
-    print("Data generation complete!")
+    logger.info("Data generation/loading complete!")

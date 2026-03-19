@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from 'react';
 import { PanelBottomClose, PanelBottomOpen, Radio, WifiOff } from 'lucide-react';
@@ -56,24 +56,26 @@ export default function ExecutionPanel({
       </div>
 
       {isOpen && (
-        <div className="h-[calc(100%-3.5rem)] overflow-y-auto p-4 bg-slate-950 text-slate-100 font-mono text-xs">
-          {logs.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-slate-500">
-              Execute a workflow to stream node-level events.
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {logs.map((log) => (
-                <div key={log.id} className="grid grid-cols-[148px_128px_1fr] gap-4 border-b border-slate-900/80 pb-2 last:border-b-0">
-                  <span className="text-slate-500">{log.timestamp || 'pending'}</span>
-                  <span className={`${levelTone[log.level] || levelTone.INFO} uppercase tracking-wide`}>
-                    {log.level} {log.nodeLabel ? `· ${log.nodeLabel}` : ''}
-                  </span>
-                  <span className="text-slate-200">{log.message}</span>
-                </div>
-              ))}
-            </div>
-          )}
+        <div className="h-[calc(100%-3.5rem)] overflow-y-auto p-4 bg-slate-50">
+          <div className="h-full bg-slate-900 rounded-xl p-4 shadow-inner ring-1 ring-slate-800/50 text-slate-300 font-mono text-[11px] leading-relaxed overflow-y-auto">
+            {logs.length === 0 ? (
+              <div className="h-full flex items-center justify-center text-slate-500 italic">
+                Execute a workflow to stream node-level events.
+              </div>
+            ) : (
+              <div className="space-y-1.5 cursor-text select-text">
+                {logs.map((log) => (
+                  <div key={log.id} className="grid grid-cols-[130px_140px_1fr] gap-4 hover:bg-slate-800/50 p-1.5 -mx-1.5 rounded transition-colors">
+                    <span className="text-slate-500">{log.timestamp || 'pending'}</span>
+                    <span className={`${levelTone[log.level] || levelTone.INFO} uppercase tracking-wider font-semibold`}>
+                      {log.level} {log.nodeLabel ? `· ${log.nodeLabel}` : ''}
+                    </span>
+                    <span className="text-slate-200">{log.message}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

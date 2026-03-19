@@ -1,31 +1,24 @@
-﻿from __future__ import annotations
-
 import os
-from typing import Generator
-
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
+# It uses the same database, but with the synchronous driver (psycopg2 instead of asyncpg)
+DATABASE_URL = os.environ.get(
+    "DATABASE_URL", 
+    "postgresql://postgres:postgres@localhost:5432/intelli_credit"
+)
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./intelli_credit.db")
+# Convert asyncpg URL to standard sync postgresql URL if needed
+sync_url = DATABASE_URL.replace("+asyncpg", "+psycopg")
 
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+# Create synchronous engine
+engine = create_engine(sync_url, pool_pre_ping=True)
 
-engine = create_engine(DATABASE_URL, connect_args=connect_args, future=True)
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-Base = declarative_base()
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
-def get_db() -> Generator:
+def get_db():
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
-
-def init_db() -> None:
-    import db_models  # noqa: F401
-
-    Base.metadata.create_all(bind=engine)
-

@@ -1,44 +1,72 @@
 import os
-from fastapi import Request, HTTPException, Security
+import json
+import base64
+from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import firebase_admin
 from firebase_admin import credentials, auth
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Ensure the Firebase App is only initialized once
 if not firebase_admin._apps:
-    # Initialize with the known project ID so verify_id_token can fetch the correct Google public keys
-    firebase_admin.initialize_app(options={'projectId': 'intelli-credit-ai-dhanu'})
+    project_id = os.environ.get("FIREBASE_PROJECT_ID", "intelli-credit-ai-dhanu")
+    cred_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "")
+    if cred_path and os.path.exists(cred_path):
+        firebase_admin.initialize_app(credentials.Certificate(cred_path))
+    else:
+        # Initialize with project ID; relies on Application Default Credentials
+        firebase_admin.initialize_app(options={"projectId": project_id})
 
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
+
+_SKIP_VERIFY = os.environ.get("SKIP_FIREBASE_VERIFY", "false").lower() == "true"
+
 
 def verify_firebase_token(credentials: HTTPAuthorizationCredentials = Security(security)):
     """
     FastAPI Dependency to intercept the Authorization header and verify the Firebase JWT.
+    
+    In local development you can set SKIP_FIREBASE_VERIFY=true in .env to bypass
+    signature verification. This must NEVER be enabled in production.
     """
+    # ── Local dev bypass (if no header or skip verify is on) ──────────────
+    if _SKIP_VERIFY:
+        if not credentials:
+            return {"uid": "dev_user", "email": "dev@localhost"}
+            
+        token = credentials.credentials
+        try:
+            parts = token.split(".")
+            if len(parts) == 3:
+                payload_b64 = parts[1]
+                payload_b64 += "=" * (-len(payload_b64) % 4)
+                decoded = json.loads(base64.urlsafe_b64decode(payload_b64).decode("utf-8"))
+                if "uid" not in decoded:
+                    decoded["uid"] = decoded.get("user_id", decoded.get("sub", "dev_user"))
+                return decoded
+        except Exception:
+            pass
+        # Fallback: return a dev user stub
+        return {"uid": "dev_user", "email": "dev@localhost"}
+
+    if not credentials:
+        raise HTTPException(
+            status_code=401,
+            detail="Missing authentication token. Please sign in.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
     token = credentials.credentials
+
+    # ── Production: full Firebase JWT verification ─────────────────────────────────
     try:
         decoded_token = auth.verify_id_token(token)
         return decoded_token
     except Exception as e:
-        # Fallback for local development if Google Application Default Credentials are missing
-        if "default credentials were not found" in str(e).lower() or "project id" in str(e).lower() or "credentials" in str(e).lower():
-            try:
-                import json, base64
-                parts = token.split('.')
-                if len(parts) == 3:
-                    payload_b64 = parts[1]
-                    payload_b64 += '=' * (-len(payload_b64) % 4)
-                    decoded = json.loads(base64.urlsafe_b64decode(payload_b64).decode('utf-8'))
-                    # Firebase SDK appends 'uid', mimicking it here
-                    if "uid" not in decoded:
-                        decoded["uid"] = decoded.get("user_id", decoded.get("sub", "firebase_user"))
-                    return decoded
-            except Exception:
-                pass
-                
-        print(f"FIREBASE JWT ERROR: {str(e)}")
         raise HTTPException(
             status_code=401,
-            detail=f"Invalid authentication credentials: {str(e)}",
+            detail="Invalid or expired authentication token. Please sign in again.",
             headers={"WWW-Authenticate": "Bearer"},
         )

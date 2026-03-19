@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from datetime import datetime
 from typing import Any
@@ -7,7 +7,7 @@ from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, LargeBinar
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
 
-from database import Base
+from async_database import AsyncBase as Base
 
 
 def utc_now() -> datetime:

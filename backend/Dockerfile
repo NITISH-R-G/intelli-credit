@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uv
+RUN --mount=type=cache,target=/root/.cache/uv uv pip install --system -r requirements.txt
 
 # Create necessary directories
 RUN mkdir -p /app/data/raw /app/data/curated /app/data/features /app/models

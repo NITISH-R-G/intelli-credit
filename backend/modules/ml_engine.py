@@ -58,11 +58,17 @@ def load_models():
 
 
 def get_model_metrics() -> Dict[str, Any]:
-    """Return model validation metrics for display."""
+    """Return model validation metrics for display.
+    Includes placeholders for demographic fairness metrics (Equalized Odds).
+    """
+    bias = _bias_report or {}
+    if "equalized_odds_disparity" not in bias:
+        bias["equalized_odds_disparity"] = "Pending real demographic data analysis"
+
     return {
         "pd_model": _pd_metrics or {},
         "limit_model": _limit_metrics or {},
-        "bias_report": _bias_report or {},
+        "bias_report": bias,
     }
 
 
@@ -137,7 +143,12 @@ def compute_risk_premium(pd_score: float, industry_risk: float,
 
 
 def get_shap_explanation(features: Dict[str, Any]) -> Dict[str, Any]:
-    """Generate SHAP-based feature importance explanation."""
+    """Generate SHAP-based feature importance explanation.
+    
+    WARNING: SHAP can be misleading with highly correlated features. For high-stakes 
+    decisions, consider using complementary rule-based logic or LIME, and always 
+    include a human-in-the-loop review.
+    """
     if _pd_model is None:
         load_models()
 

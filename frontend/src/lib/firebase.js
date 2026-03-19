@@ -11,8 +11,29 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase only if it hasn't been initialized already
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
+let app, auth, googleProvider;
+
+if (firebaseConfig.apiKey) {
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  auth = getAuth(app);
+  googleProvider = new GoogleAuthProvider();
+} else {
+  // Mock during Next.js SSG build step or missing ENV vars
+  app = {};
+  const mockUser = { 
+    uid: 'mock-user-123', 
+    email: 'guest@intellicredit.com',
+    getIdToken: async () => "mock.jwt.token"
+  };
+  auth = { 
+    currentUser: mockUser,
+    onAuthStateChanged: (cb) => { 
+      typeof cb === 'function' && cb(mockUser); 
+      return () => {}; 
+    }, 
+    signOut: async () => {} 
+  };
+  googleProvider = {};
+}
 
 export { app, auth, googleProvider };

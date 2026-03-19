@@ -1,5 +1,6 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 import { DOCUMENT_KIND_CONFIG } from '@/lib/ingestion';
+import { auth } from '@/lib/firebase';
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 export const STUDIO_API_BASE_URL = `${API_BASE_URL}/studio`;
@@ -9,6 +10,20 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+api.interceptors.request.use(async (config) => {
+  if (auth && auth.currentUser) {
+    try {
+      const token = await auth.currentUser.getIdToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (err) {
+      console.error("Failed to get Firebase token", err);
+    }
+  }
+  return config;
 });
 
 export const buildStudioWebSocketUrl = (path) => {

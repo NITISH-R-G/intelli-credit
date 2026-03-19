@@ -25,18 +25,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Uncomment these when linting constraints are added to the repo
-      # - name: Run ESLint
-      #   working-directory: ./frontend
-      #   run: |
-      #     npm ci
-      #     npm run lint
+      - name: Run Secret Scanner (Gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Run Flake8 (Python)
-      #   working-directory: ./backend
-      #   run: |
-      #     pip install flake8
-      #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run lint
+
+      - name: Run Flake8 (Python)
+        working-directory: ./backend
+        run: |
+          pip install flake8
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Run Backend Unit Tests
+        working-directory: ./backend
+        run: |
+          pip install -r requirements.txt
+          pip install pytest httpx pytest-asyncio
+          pytest
 
   integration-tests:
     name: "Ephemeral Regression Testing"

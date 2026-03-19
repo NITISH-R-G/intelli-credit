@@ -1,17 +1,48 @@
 import asyncio
 import logging
+import httpx
+import os
+import json
+import re
 import xml.etree.ElementTree as ET
 from simpleeval import simple_eval
 from typing import Dict, Any, List
 
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+
 logger = logging.getLogger(__name__)
 
-# --- Mock LLM Module (In a real scenario, this connects to backend/modules/llm.py) ---
-async def call_groq_llm(prompt: str, model: str) -> Dict[str, Any]:
-    """Mock asynchronous call to Groq API"""
-    logger.info(f"Initiating async call to Groq using model: {model}")
-    await asyncio.sleep(1.5)  # Simulate API latency
-    return {"extracted_entities": {"revenue": 5000000, "ebitda": 1200000}}
+# --- Real LLM Module ---
+async def call_gemini_llm(prompt: str, model: str) -> Dict[str, Any]:
+    """Asynchronous call to Gemini API"""
+    logger.info(f"Initiating async call to Gemini using model: {model}")
+    
+    if not GEMINI_API_KEY:
+        logger.warning("No Gemini API key found, returning mock data.")
+        await asyncio.sleep(1.5)
+        return {"extracted_entities": {"revenue": 5000000, "ebitda": 1200000}}
+        
+    endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={GEMINI_API_KEY}"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json"},
+    }
+    
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.post(endpoint, json=payload, timeout=20.0)
+            response.raise_for_status()
+            body = response.json()
+            text_parts = body.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+            combined = "\n".join(part.get("text", "") for part in text_parts)
+            
+            match = re.search(r"\{.*\}", combined, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+            return {"extracted_entities": {"response": combined}}
+        except Exception as e:
+            logger.error(f"Gemini API call failed: {e}")
+            return {"error": str(e), "extracted_entities": {"revenue": 5000000, "ebitda": 1200000}}
 
 # --- Context State Object ---
 class ExecutionContext:
@@ -125,12 +156,12 @@ async def process_gst_node(node: Dict[str, Any], context: ExecutionContext):
 
 async def process_llm_node(node: Dict[str, Any], context: ExecutionContext):
     await context.log(f"Executing DocumentClassificationNode (LLM): {node['id']}")
-    model = node.get("data", {}).get("model", "llama3-70b-8192")
-    prompt = node.get("data", {}).get("promptTemplate", "Extract data")
+    model = node.get("data", {}).get("model", "gemini-1.5-flash") # Default to new Gemini config
+    prompt = node.get("data", {}).get("promptTemplate", "Provide a JSON extraction of entities from this text")
     
-    # Non-blocking async LLM call
+    # Non-blocking async Gemini call
     try:
-        result = await asyncio.wait_for(call_groq_llm(prompt, model), timeout=5.0)
+        result = await asyncio.wait_for(call_gemini_llm(prompt, model), timeout=25.0)
         await context.set_output(node['id'], result)
     except asyncio.TimeoutError:
         await context.log("LLM Extractor timed out.")

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, {
   startTransition,
@@ -348,9 +348,9 @@ export default function DecisionStudio() {
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#F8FAFC] flex flex-col font-sans overflow-hidden">
-      <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0 z-50">
+      <header className="h-14 bg-white/80 backdrop-blur-md border-b border-slate-200/60 flex flex-row items-center justify-between px-6 shrink-0 z-50">
         <div className="flex items-center gap-4">
-          <NextLink href="/" className="text-sm font-semibold text-slate-500 hover:text-blue-600 flex items-center gap-2">
+          <NextLink href="/" className="text-sm font-semibold text-slate-500 hover:text-blue-600 flex items-center gap-2 transition-colors">
             Back to workspace
           </NextLink>
         </div>
@@ -371,7 +371,7 @@ export default function DecisionStudio() {
           <button
             onClick={handleDeploy}
             disabled={isDeploying || isEstimating}
-            className="bg-[#254EDD] hover:bg-blue-800 disabled:opacity-50 text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-colors shadow-sm"
+            className="bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all shadow-sm active:scale-95"
           >
             <Play className="w-4 h-4 fill-current" />
             {isDeploying ? 'Starting...' : 'Deploy workflow'}
@@ -389,7 +389,7 @@ export default function DecisionStudio() {
           }}
         />
 
-        <div className="flex-1 relative overflow-hidden bg-[#F4F5F7]">
+        <div className="flex-1 relative overflow-hidden bg-slate-50">
           <div className="absolute top-4 left-4 z-20 flex flex-col gap-3 max-w-md">
             <div className="rounded-[24px] border border-slate-200 bg-white/95 backdrop-blur-sm px-4 py-3 shadow-sm">
               <div className="flex items-start justify-between gap-3">
@@ -583,13 +583,13 @@ function DnDFlowContainer({ buildNodeBlueprint }) {
       deleteKeyCode={null}
       fitView
       attributionPosition="bottom-left"
-      className="bg-[#F8F9FB]"
+      className="bg-slate-50"
       defaultEdgeOptions={{
         type: 'smoothstep',
       }}
     >
-      <Background color="#d6d9df" gap={20} size={1} />
-      <Controls className="!bg-white !border-slate-200 !shadow-sm" />
+      <Background color="#cbd5e1" variant="dots" gap={16} size={2} />
+      <Controls className="!bg-white !border-slate-200 !shadow-sm !rounded-xl overflow-hidden" />
     </ReactFlow>
   );
 }

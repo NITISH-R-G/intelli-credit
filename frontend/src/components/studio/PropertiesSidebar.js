@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from 'react';
 import useWorkflowStore from '@/store/useWorkflowStore';
@@ -113,7 +113,7 @@ export default function PropertiesSidebar() {
       </div>
 
       <div className="p-6 flex flex-col gap-6">
-        <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+        <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
           <label className="text-xs font-bold text-slate-800 mb-2 block">Node label</label>
           <input
             type="text"
@@ -141,7 +141,7 @@ export default function PropertiesSidebar() {
         )}
 
         {activeNode.type === 'documentClassificationNode' && (
-          <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100 space-y-4">
+          <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100 space-y-4">
             <div>
               <label className="text-xs font-bold text-slate-800 mb-2 block">Confidence score</label>
               <input
@@ -173,7 +173,7 @@ export default function PropertiesSidebar() {
 
         {activeNode.type === 'integrationNode' && (
           <>
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-1 block">Connection</label>
               <p className="text-[11px] text-slate-500 mb-3">Select the downstream integration this node should call.</p>
               <div className="relative">
@@ -191,7 +191,7 @@ export default function PropertiesSidebar() {
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-1 block">Credential reference</label>
               <p className="text-[11px] text-slate-500 mb-3">Reference a vault entry by ID. Secrets stay out of execution logs.</p>
               <input
@@ -203,7 +203,7 @@ export default function PropertiesSidebar() {
               />
             </div>
 
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-1 block">Request body template</label>
               <p className="text-[11px] text-slate-500 mb-3">Expressions like {'{{ nodes.doc_1.fields.GrossMargin }}'} resolve at runtime.</p>
               <textarea
@@ -214,12 +214,12 @@ export default function PropertiesSidebar() {
               />
             </div>
 
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-1 block">Field assignment</label>
               <p className="text-[11px] text-slate-500 mb-3">Choose where mapped response fields land in this node output.</p>
 
               <div className="flex border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm mb-4">
-                <div className="bg-[#E2E8F0] px-3 py-2 text-blue-700 text-xs font-semibold border-r border-slate-200 shrink-0 flex items-center">
+                <div className="bg-slate-100 px-3 py-2 text-slate-700 text-xs font-semibold border-r border-slate-200 shrink-0 flex items-center">
                   data.
                 </div>
                 <input
@@ -239,7 +239,7 @@ export default function PropertiesSidebar() {
                   fieldMappings: data.fieldMappings,
                   rawData: data.mockResponse || workflowInitialInput?.extracted || {},
                 })}
-                className="w-full bg-[#254EDD] hover:bg-blue-800 text-white font-semibold text-sm py-3 rounded-full transition-colors shadow-sm"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm py-3 rounded-full transition-colors shadow-sm active:scale-95"
               >
                 Open field mapper
               </button>
@@ -249,7 +249,7 @@ export default function PropertiesSidebar() {
 
         {activeNode.type === 'conditionNode' && (
           <>
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-1 block">Condition expression</label>
               <p className="text-[11px] text-slate-500 mb-3">Use expressions to decide the active true or false branch.</p>
               <textarea
@@ -263,10 +263,10 @@ export default function PropertiesSidebar() {
               />
             </div>
 
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-2 block">Target field</label>
               <div className="flex border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
-                <div className="bg-[#E2E8F0] px-3 py-2 text-blue-700 text-xs font-semibold border-r border-slate-200 shrink-0 flex items-center">
+                <div className="bg-slate-100 px-3 py-2 text-slate-700 text-xs font-semibold border-r border-slate-200 shrink-0 flex items-center">
                   data.
                 </div>
                 <input
@@ -279,7 +279,7 @@ export default function PropertiesSidebar() {
               </div>
             </div>
 
-            <div className="bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+            <div className="bg-slate-50 p-4 rounded-3xl border border-slate-100">
               <label className="text-xs font-bold text-slate-800 mb-2 block">Default value</label>
               <input
                 type="text"
@@ -298,7 +298,7 @@ export default function PropertiesSidebar() {
             <h3 className="text-sm font-semibold text-slate-800">Execution policy</h3>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-[#F8FAFC] p-3 rounded-2xl border border-slate-100">
+            <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
               <label className="text-[11px] font-bold text-slate-800 block mb-2">Retries</label>
               <input
                 type="number"
@@ -308,7 +308,7 @@ export default function PropertiesSidebar() {
                 onChange={(event) => handleExecutionConfigChange('maxRetries', Number(event.target.value))}
               />
             </div>
-            <div className="bg-[#F8FAFC] p-3 rounded-2xl border border-slate-100">
+            <div className="bg-slate-50 p-3 rounded-2xl border border-slate-100">
               <label className="text-[11px] font-bold text-slate-800 block mb-2">Retry delay (ms)</label>
               <input
                 type="number"
@@ -321,7 +321,7 @@ export default function PropertiesSidebar() {
             </div>
           </div>
 
-          <div className="mt-3 bg-[#F8FAFC] p-4 rounded-3xl border border-slate-100">
+          <div className="mt-3 bg-slate-50 p-4 rounded-3xl border border-slate-100">
             <label className="text-[11px] font-bold text-slate-800 block mb-2">Continue on fail</label>
             <label className="flex items-center justify-between gap-3 bg-white border border-slate-200 rounded-2xl px-3 py-3 text-sm text-slate-700">
               Route failure to the <span className="font-mono text-rose-500">error</span> handle

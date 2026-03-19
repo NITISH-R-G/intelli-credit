@@ -1,4 +1,4 @@
-﻿"""
+"""
 Data Ingestion Module
 Handles PDF parsing, bank statement analysis, bureau parsing, and financial ratio extraction.
 """
@@ -15,6 +15,13 @@ import pandas as pd
 import pdfplumber
 import pytesseract
 from pdf2image import convert_from_bytes
+import logging
+import structlog
+
+logger = structlog.get_logger(__name__)
+
+from config import settings
+from schemas.ingestion import BankStatementData, BureauData, FinancialPDFData
 
 try:
     from databricks import sql
@@ -293,7 +300,7 @@ def _request_gemini_json(
         
         # Check if it's an image support error
         if "does not support image" in error_msg.lower() or "does not support" in error_msg.lower() or "cannot read" in error_msg.lower() or "image" in error_msg.lower():
-            print(f"Gemini vision not supported, falling back to text-only: {error_msg}")
+            logger.warning(f"Gemini vision not supported, falling back to text-only: {error_msg}")
             # Retry with text-only (no file_bytes)
             if file_bytes:
                 parts_text_only = [{"text": prompt}]
@@ -367,7 +374,7 @@ def _extract_text_from_pdf(file_bytes: bytes) -> str:
 
     # Fallback trigger: If character count extracted per page is abnormally low (indicating scanned image)
     if num_pages > 0 and (total_chars / num_pages) < 100:
-        print("Scanned document detected (low char count). Engaging hybrid Tesseract OCR fallback...")
+        logger.info("Scanned document detected (low char count). Engaging hybrid Tesseract OCR fallback...")
         text_chunks = []
         try:
             images = convert_from_bytes(file_bytes)
@@ -375,7 +382,7 @@ def _extract_text_from_pdf(file_bytes: bytes) -> str:
                 ocr_text = pytesseract.image_to_string(img)
                 text_chunks.append(ocr_text)
         except Exception as e:
-            print(f"OCR failed: {e}")
+            logger.error(f"OCR failed: {e}")
 
     extracted_text = "\n".join(text_chunks)
     return _normalize_indian_financials(extracted_text)
@@ -597,7 +604,7 @@ def fetch_gst_from_databricks(company_id: str, uploaded_gst_data: Optional[Dict[
                     row = _row_to_dict(cursor.fetchone())
                     result["gst_data_source"] = "databricks"
         except Exception as exc:
-            print(f"Databricks connection failed: {exc}")
+            logger.error(f"Databricks connection failed: {exc}")
 
     # --- Tier 2: Uploaded GST document data ---
     if not row and uploaded_gst_data:
@@ -757,7 +764,9 @@ def parse_financial_pdf(file_bytes: bytes) -> Dict[str, Any]:
         merged.setdefault("extraction_warnings", []).append("revenue_not_found")
     if not merged.get("sanction_terms", {}).get("amortization_schedule_available"):
         merged.setdefault("extraction_warnings", []).append("amortization_schedule_missing")
-    return merged
+        
+    clean_merged = {k: v for k, v in merged.items() if v is not None}
+    return FinancialPDFData(**clean_merged).model_dump()
 
 
 def _find_column(columns: Iterable[str], keywords: Sequence[str]) -> Optional[str]:
@@ -1003,7 +1012,8 @@ def parse_bank_statement_csv(file_bytes: bytes) -> Dict[str, Any]:
         raise ValueError(f"CSV parsing failed: {exc}") from exc
     if dataframe.empty:
         raise ValueError("Bank statement CSV is empty.")
-    return _parse_statement_dataframe(dataframe)
+    res = _parse_statement_dataframe(dataframe)
+    return BankStatementData(**res).model_dump()
 
 def _iter_account_candidates(payload: Any) -> Iterable[Dict[str, Any]]:
     stack = [payload]
@@ -1273,7 +1283,7 @@ def parse_bureau_json(data: Dict[str, Any]) -> Dict[str, Any]:
     if bureau_score_type == "not_available":
         result["bureau_warnings"] = ["No bureau score or CMR rank found — using conservative default of 650"]
 
-    return result
+    return BureauData(**result).model_dump()
 
 
 _REPAYMENT_FREQUENCY_MULTIPLIER: Dict[str, int] = {

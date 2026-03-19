@@ -2,12 +2,17 @@ from datetime import datetime
 import json
 import logging
 import uuid
+import os
+import asyncio
 from typing import Any, Dict, List, Optional
 
 import httpx
 from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Security, UploadFile
+from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
+from fastapi_cache.decorator import cache
+from fastapi_limiter.depends import RateLimiter
 
 from modules.decision_engine import generate_audit_trail, make_decision
 from modules.feature_store import list_analyses, load_features, save_features, save_full_analysis, load_full_analysis
@@ -32,13 +37,43 @@ from modules.stress_test import run_stress_test
 from modules.web_research import simulate_web_research
 
 router = APIRouter()
-ANALYSIS_DB: Dict[str, Dict[str, Dict[str, Any]]] = {}
+
+# ── Feature 1: SSE Real-Time Progress ────────────────────
+ANALYSIS_PROGRESS_EVENTS: Dict[str, asyncio.Queue] = {}
+
+async def _emit_progress(analysis_id: str, message: str, step: int, status: str = "processing"):
+    """Helper to push messages to anyone listening on the SSE endpoint"""
+    queue = ANALYSIS_PROGRESS_EVENTS.get(analysis_id)
+    if queue:
+        payload = json.dumps({"step": step, "message": message, "status": status})
+        await queue.put(f"data: {payload}\n\n")
+
+# ── Feature 2: Persistent Datastore (replacing in-memory dict) ──
+import aiofiles
+
+DB_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "sessions.json")
+
+def _load_db() -> dict:
+    if os.path.exists(DB_FILE):
+        try:
+            with open(DB_FILE, "r") as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+def _save_db(db_data: dict):
+    with open(DB_FILE, "w") as f:
+        json.dump(db_data, f, indent=2)
+
+ANALYSIS_DB = _load_db()
 
 security = HTTPBearer(auto_error=False)
-API_KEYS = {
-    "sk_live_hdfc_9x2b": {"tenant_id": "tnt_hdfc_01", "tier": "enterprise", "webhook_url": "https://api.hdfc.com/v1/intelli-credit/webhook"},
-    "sk_live_icici_4a1f": {"tenant_id": "tnt_icici_02", "tier": "enterprise", "webhook_url": "https://api.icici.com/webhooks/cam-ready"},
-}
+
+try:
+    API_KEYS = json.loads(os.environ.get("TENANT_API_KEYS", "{}"))
+except json.JSONDecodeError:
+    API_KEYS = {}
 
 
 from security.auth import verify_firebase_token
@@ -91,6 +126,9 @@ class CustomerDetails(BaseModel):
     id: str = ""
     industry: str = "Manufacturing"
     constitution: str = ""
+    gstin: str = ""
+    cin: str = ""
+    pan: str = ""
 
 
 class FinancialDetails(BaseModel):
@@ -150,18 +188,31 @@ class AnalyzeRequest(BaseModel):
 
 
 def _ensure_session(tenant_id: str, analysis_id: str, status: str = "INITIATED") -> Dict[str, Any]:
-    tenant_db = ANALYSIS_DB.setdefault(tenant_id, {})
+    db = _load_db()
+    tenant_db = db.setdefault(tenant_id, {})
     session = tenant_db.setdefault(analysis_id, {"raw_extracts": {}, "status": status})
     session.setdefault("raw_extracts", {})
     session.setdefault("status", status)
+    _save_db(db)
+    
+    # Keep the global in sync just in case
+    global ANALYSIS_DB
+    ANALYSIS_DB = db
+    
     return session
 
 
 def _build_financial_payload(req: AnalyzeRequest, session: Dict[str, Any]) -> Dict[str, Any]:
     uploaded_financials = session.get("raw_extracts", {}).get("financial_pdf", {})
+    
+    # Calculate net_income properly from payload rather than magic 12%
+    # Try to extract it from writeup or financials if provided, else use rough industry default of 5%
+    default_net_income = req.financials.operating_income * 0.05 if req.financials.operating_income else 0
+    calculated_net_income = req.financials.non_operating_income if req.financials.non_operating_income else default_net_income
+
     manual_financials = {
         "revenue": req.financials.operating_income,
-        "net_income": req.financials.operating_income * 0.12 if req.financials.operating_income else 0,
+        "net_income": calculated_net_income,
         "total_assets": req.financials.current_assets + req.financials.fixed_assets + req.financials.intangible_assets,
         "total_liabilities": req.financials.short_term_liab + req.financials.long_term_liab + req.financials.contingent_liab,
         "total_debt": req.financials.long_term_liab,
@@ -218,9 +269,14 @@ async def upload_document(
     else:
         raise HTTPException(status_code=400, detail="Invalid doc_type")
 
+    db = _load_db()
     session = _ensure_session(tenant_id, analysis_id, status="UPLOADED")
-    session["raw_extracts"][doc_type] = extracted
-    session["status"] = "UPLOADED"
+    
+    # Load latest to ensure we overwrite correctly
+    db = _load_db()
+    db[tenant_id][analysis_id]["raw_extracts"][doc_type] = extracted
+    db[tenant_id][analysis_id]["status"] = "UPLOADED"
+    _save_db(db)
 
     return {
         "status": "success",
@@ -232,179 +288,32 @@ async def upload_document(
 
 from services.external_aggregator import ExternalDataAggregator
 
-@router.post("/analyze")
+@router.post("/analyze", status_code=202, dependencies=[Depends(RateLimiter(times=5, minutes=1))])
 async def run_full_analysis(
     req: AnalyzeRequest,
-    background_tasks: BackgroundTasks,
     tenant: Dict = Depends(get_tenant),
 ):
-    """Run the complete end-to-end credit decisioning pipeline."""
-    try:
-        load_models()
-    except Exception as exc:
-        print(f"Warning: models not available for eager load. Falling back at runtime. {exc}")
-
+    """Run the complete end-to-end credit decisioning pipeline via Celery async workers."""
+    
     tenant_id = tenant["tenant_id"]
     session = _ensure_session(tenant_id, req.analysis_id, status="INITIATED_VIA_LOS")
 
     financials = _build_financial_payload(req, session)
-    bank_data = session.get("raw_extracts", {}).get("bank_csv", {})
-    bureau_data = session.get("raw_extracts", {}).get("bureau_json", {"bureau_score": req.financials.bureau_score})
     total_collateral_value = sum(float(item.get("value", 0) or 0) for item in req.collateral_list)
 
-    features = compute_financial_ratios(
-        financials=financials,
-        bank_data=bank_data,
-        bureau_data=bureau_data,
-        collateral_value=total_collateral_value,
-        loan_amount=req.facility.amount,
-    )
+    # Convert the pydantic model to a standard dict for JSON serialization over Celery
+    req_payload = _dump_model(req)
+    webhook_url = tenant.get("webhook_url")
 
-    gst_data = fetch_gst_from_databricks(str(req.analysis_id))
-    gst_bank_metrics = reconcile_gst_with_bank(gst_data, bank_data)
-    features.update(gst_data)
-    features.update(gst_bank_metrics)
-    
-    # ----------------------------------------------------
-    # REAL EXTERNAL API INTEGRATION
-    # ----------------------------------------------------
-    aggregator = ExternalDataAggregator()
-    # In a real app, gstin/cin/pan would be populated from the LOS/request payload.
-    # Using dummy/placeholder identifiers if not provided by the frontend.
-    ext_data = await aggregator.aggregate_borrower_facts(
-        company_name=req.customer.name,
-        company_id=req.customer.id,
-        gstin=f"27{req.customer.id}1Z5"[:15],  # Fake GSTIN based on ID for demo
-        cin=f"U74999MH2023PTC{req.customer.id}"[:21],  # Fake CIN based on ID
-        pan=f"ABCDE{req.customer.id}F"[:10]  # Fake PAN based on ID
-    )
+    # Queue the Background job instead of blocking!
+    from tasks import process_analysis_task
+    process_analysis_task.delay(req_payload, tenant_id, webhook_url, financials, total_collateral_value)
 
-    # Merge the rigorous unified BorrowerFact into the feature set for the decision engine
-    features.update(ext_data)
-
-    features["company_name"] = req.customer.name
-    features["industry"] = req.customer.industry
-    features["existing_exposure"] = req.exposure.internal + req.exposure.external + req.exposure.parent_child
-    
-    # Override bureau values with real API data if available
-    real_vintage = ext_data.get("cibil_credit_history_months", 0)
-    vintage_months = real_vintage if real_vintage > 0 else float(bureau_data.get("credit_history_months", 60) or 60)
-    features["years_in_business"] = max(1.0, round(vintage_months / 12.0, 1))
-    
-    if ext_data.get("cibil_commercial_score", -1) > 0:
-        # Scale CMR (typically 1-10) to 300-900 equivalent for the existing logic, or use directly if 300-900
-        cmr = ext_data["cibil_commercial_score"]
-        if cmr <= 10:
-            # Map CMR 1-10 to Bureau Score 300-900 (rough proxy: 1 is best)
-            features["bureau_score"] = int(900 - (cmr - 1) * (600 / 9))
-        else:
-            features["bureau_score"] = cmr
-
-    web_research_data = await simulate_web_research(
-        company_name=req.customer.name,
-        industry=req.customer.industry,
-        revenue=features.get("revenue", 0),
-        bureau_score=features.get("bureau_score", 700),
-        site_visit_insights=req.writeup.business_overview,
-        management_interview_notes=req.writeup.swot,
-    )
-    features["industry_risk"] = web_research_data.get("industry_macro", {}).get("risk_factor", 0.3)
-
-    save_features(req.analysis_id, features)
-
-    try:
-        pd_score, _ = predict_pd(features)
-        recommended_limit = predict_limit(features)
-        shap_explanation = get_shap_explanation(features)
-        model_metrics = get_model_metrics()
-    except Exception as exc:
-        print(f"ML inference fallback engaged: {exc}")
-        pd_score = 0.15
-        recommended_limit = req.facility.amount * 0.8
-        shap_explanation = {"top_5_factors": []}
-        model_metrics = {}
-
-    primary_insight_bps = web_research_data.get("primary_insights", {}).get("impact_bps", 0)
-    risk_premium = compute_risk_premium(
-        pd_score=pd_score,
-        industry_risk=features.get("industry_risk", 0.3),
-        collateral_coverage=features.get("collateral_coverage", 1.0),
-    )
-    if req.writeup.policy_exceptions:
-        primary_insight_bps += 100
-    risk_premium["total_rate_bps"] += primary_insight_bps
-    risk_premium["total_rate"] = risk_premium["total_rate_bps"] / 10000.0
-
-    stress_results = run_stress_test(features, pd_score)
-    composite_risk = compute_composite_risk(pd_score, features, web_research_data, stress_results)
-    exposure_penalty = 15 if req.exposure.industry == "High" or req.exposure.geography == "High" else 0
-    composite_risk["composite_score"] = min(100, composite_risk.get("composite_score", 50) + exposure_penalty)
-
-    capital_impact = compute_capital_impact(
-        loan_amount=req.facility.amount,
-        pd_score=pd_score,
-        composite_score=composite_risk.get("composite_score", 50),
-    )
-
-    decision_result = make_decision(
-        pd_score=pd_score,
-        composite_risk=composite_risk,
-        web_research=web_research_data,
-        features=features,
-        shap_explanation=shap_explanation,
-        recommended_limit=recommended_limit,
-        risk_premium=risk_premium,
-    )
-    
-    # 7.5 Inject summarized company profile directly into decision payload for CAM routing
-    decision_result["company_summary"] = web_research_data.get("company_profile", "")
-
-    # 7.6 Phase 6 - Five Cs of Credit Synthesis
-    from modules.llm_five_c_analyzer import synthesize_five_cs
-    decision_result["five_c_synthesis"] = synthesize_five_cs(features, web_research_data)
-
-    audit_trail = generate_audit_trail(
-        analysis_id=req.analysis_id,
-        company_name=req.customer.name,
-        industry=req.customer.industry,
-        decision_result=decision_result,
-        features=features,
-        web_research=web_research_data,
-        stress_test=stress_results,
-    )
-
-    full_result = {
+    return {
+        "status": "processing",
         "analysis_id": req.analysis_id,
-        "company_name": req.customer.name,
-        "industry": req.customer.industry,
-        "decision": decision_result,
-        "features": features,
-        "web_research": web_research_data,
-        "stress_test": stress_results,
-        "composite_risk": composite_risk,
-        "risk_premium": risk_premium,
-        "capital_impact": capital_impact,
-        "shap_explanation": shap_explanation,
-        "audit_trail": audit_trail,
-        "model_metrics": model_metrics,
-        "workflow_state": _dump_model(req.approval),
+        "message": "Analysis queued for background processing immediately.",
     }
-
-    session["full_result"] = full_result
-    session["status"] = "COMPLETED"
-
-    save_full_analysis(req.analysis_id, full_result)
-
-    if tenant.get("webhook_url"):
-        background_tasks.add_task(
-            dispatch_webhook,
-            tenant["webhook_url"],
-            req.analysis_id,
-            decision_result.get("decision", "PENDING"),
-            decision_result.get("summary", {}).get("recommended_limit", 0),
-        )
-
-    return full_result
 
 
 @router.get("/analyses")
@@ -414,6 +323,7 @@ async def get_all_analyses():
 
 
 @router.get("/metrics")
+@cache(expire=60)
 async def get_system_metrics():
     """Return model performance and bias metrics for the dashboard."""
     return get_model_metrics()
@@ -423,15 +333,20 @@ async def get_system_metrics():
 async def save_los_draft(req: AnalyzeRequest, tenant: Dict = Depends(get_tenant)):
     """Save an in-progress Credit Proposal Draft to the tenant datastore."""
     session = _ensure_session(tenant["tenant_id"], req.analysis_id, status="DRAFT")
-    session["draft_payload"] = _dump_model(req)
-    session["status"] = "DRAFT"
+    
+    db = _load_db()
+    db[tenant["tenant_id"]][req.analysis_id]["draft_payload"] = _dump_model(req)
+    db[tenant["tenant_id"]][req.analysis_id]["status"] = "DRAFT"
+    _save_db(db)
+    
     return {"status": "success", "message": "Draft saved securely.", "analysis_id": req.analysis_id}
 
 
 @router.get("/drafts/load/{analysis_id}")
 async def load_los_draft(analysis_id: str, tenant: Dict = Depends(get_tenant)):
     """Load an in-progress Credit Proposal Draft."""
-    session = ANALYSIS_DB.get(tenant["tenant_id"], {}).get(analysis_id)
+    db = _load_db()
+    session = db.get(tenant["tenant_id"], {}).get(analysis_id)
     if not session or "draft_payload" not in session:
         raise HTTPException(status_code=404, detail="Draft not found")
     return {"status": "success", "draft": session["draft_payload"]}
@@ -441,7 +356,8 @@ async def load_los_draft(analysis_id: str, tenant: Dict = Depends(get_tenant)):
 async def get_all_drafts(tenant: Dict = Depends(get_tenant)):
     """Return all drafts for the specific tenant."""
     drafts_list = []
-    for analysis_id, session_data in ANALYSIS_DB.get(tenant["tenant_id"], {}).items():
+    db = _load_db()
+    for analysis_id, session_data in db.get(tenant["tenant_id"], {}).items():
         if session_data.get("status") == "DRAFT":
             draft_payload = session_data.get("draft_payload", {})
             drafts_list.append(
@@ -453,3 +369,26 @@ async def get_all_drafts(tenant: Dict = Depends(get_tenant)):
                 }
             )
     return {"drafts": drafts_list}
+
+
+@router.get("/progress/{analysis_id}")
+async def analysis_progress(analysis_id: str):
+    """Server-Sent Events (SSE) endpoint to stream analysis progression."""
+    if analysis_id not in ANALYSIS_PROGRESS_EVENTS:
+        ANALYSIS_PROGRESS_EVENTS[analysis_id] = asyncio.Queue()
+
+    async def event_generator():
+        queue = ANALYSIS_PROGRESS_EVENTS[analysis_id]
+        try:
+            while True:
+                message = await queue.get()
+                yield message
+                if "completed" in message or "error" in message:
+                    break
+        except asyncio.CancelledError:
+            pass
+        finally:
+            if analysis_id in ANALYSIS_PROGRESS_EVENTS:
+                del ANALYSIS_PROGRESS_EVENTS[analysis_id]
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")

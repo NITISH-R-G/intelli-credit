@@ -29,6 +29,7 @@ export default function Workspace() {
   const [analysisId, setAnalysisId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState("IDLE"); // IDLE, UPLOADING, SUCCESS, ERROR
+  const [extractedData, setExtractedData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
   // Derived / Mocked Reconciliation Data for Panel 1
@@ -92,6 +93,10 @@ export default function Workspace() {
         const data = await res.json();
 
         setAnalysisId(data.analysis_id);
+        
+        // Merge extracted data incrementally in case the user uploads multiple files
+        setExtractedData(prev => ({ ...prev, ...(data.extracted_data || {}) }));
+        
         setUploadStatus("SUCCESS");
         setErrorMessage("");
       } catch (err) {
@@ -108,11 +113,25 @@ export default function Workspace() {
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
 
+    const e = extractedData || {};
+
     // Construct the payload structure corresponding to AnalyzeRequest matching the backend
     const payload = {
       analysis_id: analysisId || "ana_" + Math.random().toString(36).substr(2, 9),
-      customer: { name: "Acme Corp Ltd.", id: "cust_123", industry: "Manufacturing", constitution: "Private Limited" },
-      financials: { operating_income: 5000000, non_operating_income: 0, short_term_liab: 1000000, long_term_liab: 2000000, contingent_liab: 0, internal_rating: "BBB", external_rating: "BB+", bureau_score: 750, current_assets: 3000000, fixed_assets: 4000000, intangible_assets: 0 },
+      customer: { name: "Acme Corp Ltd.", id: "cust_123", industry: "Manufacturing", constitution: "Private Limited", gstin: "", cin: "", pan: "" },
+      financials: { 
+        operating_income: e.revenue ?? e.total_inflows ?? 5000000, 
+        non_operating_income: e.net_income ?? 0, 
+        short_term_liab: e.current_liabilities ?? 1000000, 
+        long_term_liab: e.total_debt ?? 2000000, 
+        contingent_liab: 0, 
+        internal_rating: "BBB", 
+        external_rating: "BB+", 
+        bureau_score: e.bureau_score ?? 750, 
+        current_assets: e.current_assets ?? 3000000, 
+        fixed_assets: e.total_assets ? (e.total_assets - (e.current_assets || 0)) : 4000000, 
+        intangible_assets: 0 
+      },
       facility: { amount: 2000000, currency: "INR", purpose: "Working Capital", term_months: 24, repayment_method: "EMI" },
       collateral_list: [{ type: "Real Estate", value: 2500000 }],
       writeup: { swot: "Strong market position.", business_overview: researchNotes || "Standard capacity.", policy_exceptions: "" },

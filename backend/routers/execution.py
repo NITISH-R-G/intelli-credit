@@ -36,7 +36,7 @@ def fetch_mock_dag_for_policy(policy_id: str) -> dict:
                 {"id": "node_trigger", "type": "triggerNode", "data": {}},
                 {"id": "node_Integration1", "type": "integrationNode", "data": {"connection": "Equifax"}},
                 {"id": "node_Integration2", "type": "gstReconciliationNode", "data": {}},
-                {"id": "node_LLM", "type": "documentClassificationNode", "data": {"model": "llama3-70b-8192"}},
+                {"id": "node_LLM", "type": "documentClassificationNode", "data": {"model": "gemini-1.5-flash"}},
                 {"id": "node_Logic", "type": "conditionNode", "data": {
                     "expression": "context['node_Integration1']['vantage_score'] > 700 and context['node_Integration2']['variance'] < 0.10"
                 }},
