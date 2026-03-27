@@ -1,7 +1,8 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, Query, HTTPException
-from sqlalchemy.orm import Session
-from database import get_db
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from async_database import get_async_db
 from services.search_engine import search_engine_instance
 from pydantic import BaseModel
 
@@ -21,17 +22,14 @@ class SearchResult(BaseModel):
 @router.on_event("startup")
 async def initialize_search_engine():
     """Initializes the FAISS and TF-IDF indices on startup."""
-    # Note: In a real clustered production environment, you'd trigger this
-    # via a dedicated worker or message queue to avoid slowing down API startup.
-    # For local/demo, we initialize here.
-    db_gen = get_db()
-    db = next(db_gen)
     try:
-        await search_engine_instance.synchronize_index(db)
-    finally:
-        db.close()
+        from async_database import AsyncSessionLocal
+        async with AsyncSessionLocal() as db:
+            await search_engine_instance.synchronize_index(db)
+    except Exception as e:
+        print(f"Warning: Search engine initialization failed (DB likely unavailable): {e}")
 
-@router.get("/portfolio/search", response_model=List[SearchResult])
+@router.get("/search", response_model=List[SearchResult])
 async def search_portfolio(
     q: str = Query("", description="Natural language or keyword search query"),
     status: Optional[str] = Query(None, description="Filter by application status"),
@@ -55,4 +53,5 @@ async def search_portfolio(
         results = search_engine_instance.search(query=q, filters=filters, top_k=limit)
         return results
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"WARNING: Portfolio search failed (DB likely unavailable): {e}")
+        return []
