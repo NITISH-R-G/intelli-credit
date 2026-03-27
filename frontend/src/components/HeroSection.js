@@ -31,7 +31,7 @@ export default function HeroSection({ itemVariants }) {
         </h1>
         
         <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mt-4">
-          Upload financials to trigger end-to-end ML credit scoring, automated web-scale diligence, scenario simulation, and structured CAM generation.
+          Upload financials to trigger end-to-end ML credit scoring, automated web-scale diligence, and structured CAM generation.
         </p>
 
         {/* Call to Action Buttons */}
@@ -44,14 +44,6 @@ export default function HeroSection({ itemVariants }) {
             icon={ArrowRight}
           >
             Start New Workflow
-          </Button>
-          <Button 
-            variant="secondary" 
-            size="lg" 
-            className="w-full sm:w-auto"
-            onClick={() => router.push('/studio')}
-          >
-            Explore Decision Studio
           </Button>
         </div>
       </div>

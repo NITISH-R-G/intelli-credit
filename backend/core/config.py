@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     
     # Origins
     ALLOWED_ORIGINS_STR: str = Field(
-        default="http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173"
+        default="*"
     )
 
     @property
@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     SIGNZY_API_KEY: str = Field(default="")
     KARZA_API_KEY: str = Field(default="")
     CIBIL_API_KEY: str = Field(default="")
+    
+    # Gemini API
+    GEMINI_API_KEY: str = Field(default="")
+    GEMINI_MODEL: str = Field(default="gemini-1.5-flash")
     
     # Internal keys/Webhooks (these used to be hardcoded in routers/analyze.py)
     HDFC_API_KEY: str = Field(default="sk_live_hdfc_9x2b")

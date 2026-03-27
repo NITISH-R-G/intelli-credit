@@ -22,11 +22,10 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
 
+  if (pathname === '/login') return null;
+
   const navLinks = [
     { name: "Workspace", href: "/", icon: LayoutDashboard },
-    { name: "Simulation Lab", href: "/simulation", icon: Zap },
-    { name: "Decision Studio", href: "/decision-studio", icon: Workflow },
-    { name: "Policies", href: "/decision-studio/policies", icon: FileCheck2 },
     { name: "Pipeline", href: "/pipeline", icon: BarChart3 },
     { name: "Portfolio", href: "/portfolio", icon: Briefcase },
   ];

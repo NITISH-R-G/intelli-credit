@@ -28,7 +28,7 @@ export default function LoginPage() {
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
       }
-      router.push("/");
+      // AuthContext will handle the redirect to "/" automatically
     } catch (err) {
       if (err.code === "auth/invalid-credential") {
         setError("Invalid email or password");
@@ -37,7 +37,6 @@ export default function LoginPage() {
       } else {
         setError(err.message || "An error occurred during authentication");
       }
-    } finally {
       setIsLoading(false);
     }
   };
@@ -47,7 +46,7 @@ export default function LoginPage() {
     setError("");
     try {
         await signInWithPopup(auth, googleProvider);
-        router.push("/");
+        // AuthContext will handle the redirect to "/" automatically
     } catch (err) {
         console.error("Google Auth Error:", err);
         if (err.code === 'auth/popup-closed-by-user') {
@@ -57,8 +56,7 @@ export default function LoginPage() {
         } else {
             setError(err.message || "Google Sign-in failed. Please try again.");
         }
-    } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
   };
 

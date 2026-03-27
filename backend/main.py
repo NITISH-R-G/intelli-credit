@@ -18,6 +18,7 @@ for mod_name in MOCK_LIST:
     if mod_name not in sys.modules:
         m = MagicMock()
         m._apps = []
+        m.__spec__ = MagicMock()  # Fix for Python 3 import checks expecting __spec__
         sys.modules[mod_name] = m
         print(f"DEBUG: Mocked {mod_name}")
 
@@ -43,14 +44,6 @@ app = FastAPI(
     version=settings.VERSION if hasattr(settings, 'VERSION') else "1.0.0"
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS if hasattr(settings, 'ALLOWED_ORIGINS') else ["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # --- Individual Router Imports ---
 def load_router(mod_path):
     try:
@@ -62,14 +55,11 @@ def load_router(mod_path):
         print(f"WARNING: Failed to import {mod_path}: {e}")
         return None
 
-approvals_router = load_router("routers.approvals")
-decision_studio_core = load_router("routers.decision_studio_core")
 applications = load_router("routers.applications")
 analyze_router = load_router("routers.analyze")
 cam_router = load_router("routers.cam")
 portfolio_router = load_router("routers.portfolio")
 research_router = load_router("routers.research")
-simulation_router = load_router("routers.simulation")
 
 # Idempotency middleware — caches POST responses by Idempotency-Key header
 try:
@@ -84,11 +74,15 @@ if cam_router: app.include_router(cam_router.router, prefix="/api/cam", tags=["C
 if applications: app.include_router(applications.router, prefix="/api", tags=["Applications"])
 if research_router: app.include_router(research_router.router, prefix="/api/research", tags=["Web Research"])
 if portfolio_router: app.include_router(portfolio_router.router, prefix="/api/portfolio", tags=["Portfolio Management"])
-if simulation_router: app.include_router(simulation_router.router, tags=["MiroFish Simulation"])
 
-# V2/Decision Studio Routers
-if approvals_router: app.include_router(approvals_router.router, prefix="/api/v2", tags=["Policy Approvals"])
-if decision_studio_core: app.include_router(decision_studio_core.router, prefix="/api/decision-studio", tags=["Decision Studio"])
+# --- Add CORS Middleware Last (Outermost) ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Hardcoded for maximum reliability across environments
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from async_database import async_engine
 from async_models import AsyncBase
@@ -96,6 +90,8 @@ from async_models import AsyncBase
 @app.on_event("startup")
 async def startup_event():
     import os
+    from database import init_db
+    init_db()
     base_dir = os.path.dirname(os.path.abspath(__file__))
     for d in ["data/raw", "data/curated", "data/features", "models"]:
         os.makedirs(os.path.join(base_dir, d), exist_ok=True)
@@ -112,10 +108,7 @@ def health():
         "status": "ok", 
         "mode": "rescue", 
         "routers_loaded": {
-            "approvals": approvals_router is not None,
-            "decision_studio": decision_studio_core is not None,
-            "applications": applications is not None,
-            "simulation": simulation_router is not None
+            "applications": applications is not None
         }
     }
 

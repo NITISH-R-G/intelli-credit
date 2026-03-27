@@ -49,11 +49,13 @@ except ImportError:
     print("WARNING: scipy not found")
     norm = None
 
+from core.config import settings
+
 DATABRICKS_SERVER_HOSTNAME = os.environ.get("DATABRICKS_SERVER_HOSTNAME", "mock.cloud.databricks.com")
 DATABRICKS_HTTP_PATH = os.environ.get("DATABRICKS_HTTP_PATH", "sql/1.0/endpoints/mock")
 DATABRICKS_ACCESS_TOKEN = os.environ.get("DATABRICKS_ACCESS_TOKEN", "mock-token")
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
+GEMINI_API_KEY = settings.GEMINI_API_KEY
+GEMINI_MODEL = settings.GEMINI_MODEL
 GEMINI_TIMEOUT_SEC = float(os.environ.get("GEMINI_TIMEOUT_SEC", "45"))
 BANK_CATEGORY_BATCH_SIZE = int(os.environ.get("BANK_CATEGORY_BATCH_SIZE", "40"))
 
