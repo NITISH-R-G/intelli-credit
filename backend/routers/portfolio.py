@@ -24,12 +24,17 @@ async def initialize_search_engine():
     # Note: In a real clustered production environment, you'd trigger this
     # via a dedicated worker or message queue to avoid slowing down API startup.
     # For local/demo, we initialize here.
-    db_gen = get_db()
-    db = next(db_gen)
-    try:
-        await search_engine_instance.synchronize_index(db)
-    finally:
-        db.close()
+    import asyncio
+    
+    async def run_sync():
+        db_gen = get_db()
+        db = next(db_gen)
+        try:
+            await search_engine_instance.synchronize_index(db)
+        finally:
+            db.close()
+
+    asyncio.create_task(run_sync())
 
 @router.get("/portfolio/search", response_model=List[SearchResult])
 async def search_portfolio(

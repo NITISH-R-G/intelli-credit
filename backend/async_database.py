@@ -19,15 +19,21 @@ from sqlalchemy.orm import DeclarativeBase
 
 ASYNC_DATABASE_URL = os.getenv(
     "ASYNC_DATABASE_URL",
-    "postgresql+asyncpg://postgres:postgres@localhost:5432/intelli_credit",
+    "sqlite+aiosqlite:///./intelli_credit_async.db",
 )
+
+# Detect if we should use SQLite (default or explicit)
+is_sqlite = ASYNC_DATABASE_URL.startswith("sqlite")
 
 async_engine = create_async_engine(
     ASYNC_DATABASE_URL,
     echo=False,
     future=True,
-    pool_size=10,
-    max_overflow=20,
+    # Pool arguments only for real DBs (Postgres)
+    **({
+        "pool_size": 10,
+        "max_overflow": 20,
+    } if not is_sqlite else {})
 )
 
 AsyncSessionLocal = async_sessionmaker(

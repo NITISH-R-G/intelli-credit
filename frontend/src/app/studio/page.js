@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, {
   startTransition,
@@ -33,6 +33,7 @@ import {
   TriggerNode,
   MCAFilingSyncNode,
   EPFOAnomalyNode,
+  GSTReconciliationNode,
 } from '@/components/studio/nodes';
 import {
   buildStudioWebSocketUrl,
@@ -49,6 +50,7 @@ const nodeTypes = {
   explainableAINode: ExplainableAINode,
   mcaFilingSyncNode: MCAFilingSyncNode,
   epfoAnomalyNode: EPFOAnomalyNode,
+  gstReconciliationNode: GSTReconciliationNode,
 };
 
 const createNodeId = (type) => `${type}-${(typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2, 11)).slice(0, 8)}`;
@@ -322,7 +324,7 @@ export default function DecisionStudio() {
 
       // Show error in execution panel
       applyExecutionEvent({
-        type: 'execution.error',
+        type: 'execution.failed',
         level: 'ERROR',
         message: `${errorTitle}: ${errorMessage}`,
         timestamp: new Date().toISOString()

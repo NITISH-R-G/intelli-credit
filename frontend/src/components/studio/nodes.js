@@ -1,4 +1,4 @@
-﻿import React, { memo } from 'react';
+import React, { memo } from 'react';
 import { Handle, Position } from 'reactflow';
 import {
   AlertTriangle,
@@ -355,6 +355,34 @@ export const EPFOAnomalyNode = memo(({ data, selected }) => {
   );
 });
 
+export const GSTReconciliationNode = memo(({ data, selected }) => {
+  const runtime = getRuntime(data);
+  const tone = runtimeTone[runtime.status] || runtimeTone.idle;
+
+  return (
+    <div className={`relative w-72 bg-card rounded-xl shadow-md border-2 ${selected ? 'ring-2 ring-primary/30 shadow-lg' : ''} ${tone.ring} flex items-stretch overflow-hidden transition-all text-left`}>
+      <RuntimeBadge data={data} />
+      <div className="w-1.5 bg-emerald-500 opacity-80 shrink-0"></div>
+
+      <div className="p-3 flex-1 flex flex-col gap-2 pr-20">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 shrink-0">
+            <RefreshCw className="w-5 h-5" />
+          </div>
+          <div className="flex flex-col min-w-0">
+            <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-wider truncate">Data Integrity</span>
+            <span className="text-sm font-semibold text-foreground truncate">{data.label || 'GST Reconciliation'}</span>
+          </div>
+        </div>
+      </div>
+
+      <CustomHandle type="target" position={Position.Top} colorClass="bg-emerald-500/50" />
+      <CustomHandle type="source" position={Position.Bottom} colorClass="bg-emerald-500" />
+      <ErrorHandle />
+    </div>
+  );
+});
+
 TriggerNode.displayName = 'TriggerNode';
 DocumentClassificationNode.displayName = 'DocumentClassificationNode';
 IntegrationNode.displayName = 'IntegrationNode';
@@ -362,4 +390,5 @@ ConditionNode.displayName = 'ConditionNode';
 ExplainableAINode.displayName = 'ExplainableAINode';
 MCAFilingSyncNode.displayName = 'MCAFilingSyncNode';
 EPFOAnomalyNode.displayName = 'EPFOAnomalyNode';
+GSTReconciliationNode.displayName = 'GSTReconciliationNode';
 

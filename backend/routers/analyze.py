@@ -91,6 +91,9 @@ class CustomerDetails(BaseModel):
     id: str = ""
     industry: str = "Manufacturing"
     constitution: str = ""
+    pan: str = ""
+    cin: str = ""
+    gstin: str = ""
 
 
 class FinancialDetails(BaseModel):
@@ -196,8 +199,8 @@ async def upload_document(
 ):
     """Upload and parse a document, returning a temporary analysis_id."""
     filename = getattr(file, "filename", "") or ""
-    if not filename.lower().endswith((".pdf", ".csv")):
-        raise HTTPException(status_code=400, detail={"error": "Unsupported file type. Strictly .pdf and .csv are allowed."})
+    if not filename.lower().endswith((".pdf", ".csv", ".json")):
+        raise HTTPException(status_code=400, detail={"error": "Unsupported file type. Strictly .pdf, .csv, and .json are allowed."})
 
     content = await file.read()
     if len(content) > 50 * 1024 * 1024:
@@ -269,14 +272,12 @@ async def run_full_analysis(
     # REAL EXTERNAL API INTEGRATION
     # ----------------------------------------------------
     aggregator = ExternalDataAggregator()
-    # In a real app, gstin/cin/pan would be populated from the LOS/request payload.
-    # Using dummy/placeholder identifiers if not provided by the frontend.
     ext_data = await aggregator.aggregate_borrower_facts(
         company_name=req.customer.name,
         company_id=req.customer.id,
-        gstin=f"27{req.customer.id}1Z5"[:15],  # Fake GSTIN based on ID for demo
-        cin=f"U74999MH2023PTC{req.customer.id}"[:21],  # Fake CIN based on ID
-        pan=f"ABCDE{req.customer.id}F"[:10]  # Fake PAN based on ID
+        gstin=req.customer.gstin,
+        cin=req.customer.cin,
+        pan=req.customer.pan
     )
 
     # Merge the rigorous unified BorrowerFact into the feature set for the decision engine

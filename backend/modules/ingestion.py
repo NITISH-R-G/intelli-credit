@@ -93,52 +93,68 @@ ALLOWED_PAYMENT_GATEWAYS = {
     "unknown",
 }
 
+OCR_NUMERIC_CHARS = r"0-9SOlI,.\-"
+
 FIELD_PATTERNS = {
     "revenue": [
-        r"(?:total\s+)?revenue[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"(?:net\s+)?sales[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"turnover[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"income\s+from\s+operations[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"(?:total\s+)?revenue[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"(?:net\s+)?sales[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"turnover[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"income\s+from\s+operations[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
     "net_income": [
-        r"net\s+(?:income|profit)[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"profit\s+after\s+tax[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"\bpat[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"net\s+(?:income|profit)[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"profit\s+after\s+tax[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"\bpat[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
-    "total_assets": [r"total\s+assets[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
-    "total_liabilities": [r"total\s+liabilities[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
+    "total_assets": [rf"total\s+assets[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
+    "total_liabilities": [rf"total\s+liabilities[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
     "total_equity": [
-        r"(?:total\s+)?(?:shareholders?\s+)?equity[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"net\s+worth[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"(?:total\s+)?(?:shareholders?\s+)?equity[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"net\s+worth[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
     "ebitda": [
-        r"\bebitda[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"earnings\s+before\s+interest[^:]*[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"\bebitda[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"earnings\s+before\s+interest[^:]*[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
     "total_debt": [
-        r"total\s+(?:borrowings?|debt)[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"long[\s-]term\s+(?:debt|borrowings?)[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"total\s+(?:borrowings?|debt)[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"long[\s-]term\s+(?:debt|borrowings?)[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
     "cash_and_equivalents": [
-        r"cash\s+(?:and\s+)?(?:cash\s+)?equivalents?[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"cash\s+(?:and|&)\s+bank[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"cash\s+(?:and\s+)?(?:cash\s+)?equivalents?[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"cash\s+(?:and|&)\s+bank[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
     "operating_cash_flow": [
-        r"(?:operating|operational)\s+cash\s+flow[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"cash\s+from\s+operations[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"(?:operating|operational)\s+cash\s+flow[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"cash\s+from\s+operations[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
-    "depreciation": [r"depreciation[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
+    "depreciation": [rf"depreciation[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
     "interest_expense": [
-        r"interest\s+(?:expense|cost)[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
-        r"finance\s+cost[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)",
+        rf"interest\s+(?:expense|cost)[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
+        rf"finance\s+cost[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)",
     ],
-    "tax_expense": [r"tax\s+expense[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
-    "current_assets": [r"(?:total\s+)?current\s+assets[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
-    "current_liabilities": [r"(?:total\s+)?current\s+liabilities[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
-    "accounts_receivable": [r"accounts\s+receivable[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
-    "inventory": [r"inventory[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)"],
+    "tax_expense": [rf"tax\s+expense[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
+    "current_assets": [rf"(?:total\s+)?current\s+assets[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
+    "current_liabilities": [rf"(?:total\s+)?current\s+liabilities[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
+    "accounts_receivable": [rf"accounts\s+receivable[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
+    "inventory": [rf"inventory[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)"],
 }
 
+
+
+
+def _ocr_fix(match: re.Match) -> str:
+    """Callback for re.sub to fix common OCR misreads within numeric context."""
+    s = match.group(0)
+    return (
+        s.replace('S', '5')
+         .replace('s', '5')
+         .replace('O', '0')
+         .replace('o', '0')
+         .replace('l', '1')
+         .replace('I', '1')
+    )
 
 
 def _safe_float(value: Any, default: float = 0.0) -> float:
@@ -148,21 +164,33 @@ def _safe_float(value: Any, default: float = 0.0) -> float:
         if pd.isna(value):
             return default
         return float(value)
+    
+    # Handle common OCR misreads in numeric context
     cleaned = str(value).strip()
     if not cleaned:
         return default
-    negative = cleaned.startswith("(") and cleaned.endswith(")")
+        
+    # Replace common OCR errors if the surrounding context contains any digits
+    # OR if it looks like a misread currency/number block
+    if re.search(r'\d|[SOlI]', cleaned):
+        cleaned = re.sub(rf'[{OCR_NUMERIC_CHARS}]+', _ocr_fix, cleaned)
+
+    negative = (cleaned.startswith("(") and cleaned.endswith(")")) or cleaned.startswith("-")
     cleaned = cleaned.replace(",", "")
-    cleaned = cleaned.replace("Rs.", "").replace("Rs", "").replace("INR", "")
+    cleaned = re.sub(r'(?i)Rs\.?|INR|/-', '', cleaned)
     cleaned = cleaned.replace("%", "")
-    cleaned = re.sub(r"[^0-9.\-]", "", cleaned)
-    if cleaned in {"", "-", ".", "-."}:
+    
+    # Extract only the first valid numeric part
+    numeric_match = re.search(r'[-+]?\d*\.?\d+', cleaned)
+    if not numeric_match:
         return default
+        
     try:
-        result = float(cleaned)
-    except ValueError:
+        result = float(numeric_match.group(0))
+    except (ValueError, OverflowError):
         return default
     return -abs(result) if negative else result
+
 
 
 def _safe_int(value: Any, default: int = 0) -> int:
@@ -220,6 +248,34 @@ def _coerce_sanction_terms(raw_terms: Any) -> Dict[str, Any]:
         ),
         "amortization_schedule_available": _safe_bool(terms.get("amortization_schedule_available")),
     }
+
+
+def _verify_financial_logic(extracted: Dict[str, Any]) -> List[str]:
+    """Verify basic accounting identities to detect extraction errors or fraud."""
+    warnings = []
+    
+    revenue = extracted.get("revenue")
+    ebitda = extracted.get("ebitda")
+    net_income = extracted.get("net_income")
+    
+    if revenue is not None and ebitda is not None:
+        if ebitda > revenue:
+            warnings.append("EBITDA exceeds Revenue - likely extraction error.")
+            
+    if net_income is not None and ebitda is not None:
+        if net_income > ebitda:
+            warnings.append("Net Income exceeds EBITDA - check for non-operating income or extraction error.")
+            
+    assets = extracted.get("total_assets")
+    liabilities = extracted.get("total_liabilities")
+    equity = extracted.get("total_equity")
+    
+    if all(v is not None for v in [assets, liabilities, equity]):
+        variance = abs(assets - (liabilities + equity))
+        if variance > (assets * 0.05) and assets > 0:
+            warnings.append(f"Balance Sheet mismatch: Assets don't equal Liab+Equity (Variance: {variance:,.0f}).")
+            
+    return warnings
 
 
 def _validate_financial_extraction(
@@ -321,28 +377,39 @@ def _request_gemini_json(
 
 
 def _normalize_indian_financials(text: str) -> str:
-    """Regex-based utility to convert Indian 'Cr' and 'Lakhs' into clean standard numbers."""
+    """Regex-based utility to convert Indian 'Cr' and 'Lakhs' into clean standard numbers.
+    Hardened to handle common OCR misreads like 'Gr' for 'Cr' or 'Lacs'.
+    """
     if not text:
         return text
     
+    # Handle Crores (Cr, Crore, Crores, Gr, 0r)
     def replace_cr(match):
         try:
-            val = float(match.group(1).replace(",", ""))
-            return str(int(val * 10000000))
-        except ValueError:
+            val_str = re.sub(rf'[{OCR_NUMERIC_CHARS}]+', _ocr_fix, match.group(1)).replace(",", "")
+            val = float(val_str)
+            return f" {int(val * 10000000)} "
+        except (ValueError, OverflowError):
             return match.group(0)
     
-    text = re.sub(r"([\d,]+(?:\.\d+)?)\s*(?:Cr|Crores?)", replace_cr, text, flags=re.IGNORECASE)
+    # Pattern for Crores: Capture number followed by Cr variants
+    cr_pattern = rf"([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)\s*(?:Cr|Crores?|[G0]r|Crs)\b"
+    text = re.sub(cr_pattern, replace_cr, text, flags=re.IGNORECASE)
     
+    # Handle Lakhs (L, Lakh, Lakhs, Lac, Lacs)
     def replace_lakh(match):
         try:
-            val = float(match.group(1).replace(",", ""))
-            return str(int(val * 100000))
-        except ValueError:
+            val_str = re.sub(rf'[{OCR_NUMERIC_CHARS}]+', _ocr_fix, match.group(1)).replace(",", "")
+            val = float(val_str)
+            return f" {int(val * 100000)} "
+        except (ValueError, OverflowError):
             return match.group(0)
     
-    text = re.sub(r"([\d,]+(?:\.\d+)?)\s*(?:Lakhs?|Lacs?)", replace_lakh, text, flags=re.IGNORECASE)
+    lakh_pattern = rf"([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)\s*(?:L|Lakhs?|Lacs?)\b"
+    text = re.sub(lakh_pattern, replace_lakh, text, flags=re.IGNORECASE)
+    
     return text
+
 
 
 def _extract_text_from_pdf(file_bytes: bytes) -> str:
@@ -366,8 +433,18 @@ def _extract_text_from_pdf(file_bytes: bytes) -> str:
                 total_chars += len(page_text)
 
     # Fallback trigger: If character count extracted per page is abnormally low (indicating scanned image)
-    if num_pages > 0 and (total_chars / num_pages) < 100:
-        print("Scanned document detected (low char count). Engaging hybrid Tesseract OCR fallback...")
+    avg_chars = total_chars / num_pages if num_pages > 0 else 0
+    is_scanned = avg_chars < 250
+    
+    # Additional gibberish check: high ratio of non-alphanumeric chars in text-layer
+    if not is_scanned and total_chars > 200:
+        full_text_sample = "\n".join(text_chunks)
+        alphanumeric_count = len(re.findall(r'[A-Za-z0-9]', full_text_sample))
+        if (alphanumeric_count / total_chars) < 0.4:
+            is_scanned = True
+
+    if is_scanned:
+        print(f"Scanned or noisy document detected (avg {avg_chars:.1f} chars/pg). Engaging Tesseract...")
         text_chunks = []
         try:
             images = convert_from_bytes(file_bytes)
@@ -410,10 +487,11 @@ def _extract_fields_from_text(text: str) -> Dict[str, Any]:
                 extracted[field] = _safe_float(match.group(1), None)
                 break
 
-    limit_match = re.search(r"(?:limit|facility)\s*(?:of)?\s*(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)", cleaned_text, re.IGNORECASE)
-    interest_match = re.search(r"(?:interest\s+rate|roi)[:\s]+([\d.]+)", cleaned_text, re.IGNORECASE)
-    tenor_match = re.search(r"(?:tenor|repayment\s+period)[:\s]+([\d]+)", cleaned_text, re.IGNORECASE)
-    installment_match = re.search(r"(?:emi|installment)[:\s]+(?:rs\.?|inr)?\s*([\d,]+(?:\.\d+)?)", cleaned_text, re.IGNORECASE)
+    limit_match = re.search(rf"(?:limit|facility)\s*(?:of)?\s*(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)", cleaned_text, re.IGNORECASE)
+    interest_match = re.search(rf"(?:interest\s+rate|roi)[:\s]+([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)", cleaned_text, re.IGNORECASE)
+    tenor_match = re.search(rf"(?:tenor|repayment\s+period)[:\s]+([{OCR_NUMERIC_CHARS}]+)", cleaned_text, re.IGNORECASE)
+    installment_match = re.search(rf"(?:emi|installment)[:\s]+(?:rs\.?|inr)?\s*([{OCR_NUMERIC_CHARS}]+(?:\.[{OCR_NUMERIC_CHARS}]+)?)", cleaned_text, re.IGNORECASE)
+
 
     lines = [line.strip() for line in cleaned_text.splitlines() if line.strip()]
     extracted["document_type"] = _detect_document_type(cleaned_text)
@@ -757,6 +835,11 @@ def parse_financial_pdf(file_bytes: bytes) -> Dict[str, Any]:
         merged.setdefault("extraction_warnings", []).append("revenue_not_found")
     if not merged.get("sanction_terms", {}).get("amortization_schedule_available"):
         merged.setdefault("extraction_warnings", []).append("amortization_schedule_missing")
+        
+    # Final data integrity verification
+    logic_warnings = _verify_financial_logic(merged)
+    merged.setdefault("extraction_warnings", []).extend(logic_warnings)
+    
     return merged
 
 
@@ -856,12 +939,12 @@ def _parse_statement_dataframe(df: pd.DataFrame) -> Dict[str, Any]:
     working = df.copy()
     working.columns = [str(column).strip() for column in working.columns]
 
-    date_col = _find_column(working.columns, ["date", "txn date", "transaction date", "value date"])
-    desc_col = _find_column(working.columns, ["description", "narration", "remarks", "particular", "details"])
-    credit_col = _find_column(working.columns, ["credit", "deposit", "cr amount"])
-    debit_col = _find_column(working.columns, ["debit", "withdrawal", "dr amount"])
-    amount_col = _find_column(working.columns, ["amount", "transaction amount"])
-    balance_col = _find_column(working.columns, ["balance", "closing bal", "available balance"])
+    date_col = _find_column(working.columns, ["date", "txn date", "transaction date", "value date", "entry date"])
+    desc_col = _find_column(working.columns, ["description", "narration", "remarks", "particular", "details", "transaction details"])
+    credit_col = _find_column(working.columns, ["credit", "deposit", "cr amount", "inward", "receipts", "amount(cr)"])
+    debit_col = _find_column(working.columns, ["debit", "withdrawal", "dr amount", "outward", "payments", "amount(dr)"])
+    amount_col = _find_column(working.columns, ["amount", "transaction amount", "txn amount", "net amount"])
+    balance_col = _find_column(working.columns, ["balance", "closing bal", "available balance", "bal amt", "running balance"])
 
     if not any([credit_col, debit_col, amount_col]):
         raise ValueError("Bank statement CSV does not contain amount columns")

@@ -146,6 +146,36 @@ async def process_condition_node(node: Dict[str, Any], context: ExecutionContext
     
     expression = node.get("data", {}).get("expression", "True")
     
+    import re
+    def replacer(match):
+        path = match.group(1).strip()
+        
+        # Determine the root dictionary to search
+        if path.startswith("nodes."):
+            val = local_vars.get("context", {})
+            path_keys = path[6:].split(".")
+        elif path.startswith("input."):
+            val = local_vars.get("payload", {})
+            path_keys = path[6:].split(".")
+        else:
+            return match.group(0)
+            
+        # Traverse the path
+        for key in path_keys:
+            if isinstance(val, dict):
+                val = val.get(key)
+            else:
+                return "None"
+                
+        # Format the extracted value for simple_eval
+        if isinstance(val, str):
+            return f"'{val}'"
+        return str(val) if val is not None else "None"
+
+    # Replace all {{ path }} occurrences
+    expression = re.sub(r'\{\{(.*?)\}\}', replacer, expression)
+
+    
     try:
         # Secure AST AST parsing utilizing simpleeval
         # Evaluates safely strictly without access to arbitrary imports (no RCE)

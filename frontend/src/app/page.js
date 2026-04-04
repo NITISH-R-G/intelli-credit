@@ -55,7 +55,7 @@ export default function Workspace() {
 
   // --- DROPZONE FOR UPLOAD ---
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: { 'application/pdf': ['.pdf'], 'text/csv': ['.csv'] },
+    accept: { 'application/pdf': ['.pdf'], 'text/csv': ['.csv'], 'application/json': ['.json'] },
     onDrop: async (acceptedFiles) => {
       if (!acceptedFiles.length) return;
       setIsUploading(true);
@@ -65,7 +65,7 @@ export default function Workspace() {
         const file = acceptedFiles[0];
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("doc_type", file.type.includes("pdf") ? "financial_pdf" : "bank_csv");
+        formData.append("doc_type", file.type.includes("pdf") ? "financial_pdf" : file.type.includes("csv") ? "bank_csv" : "bureau_json");
         if (analysisId) formData.append("analysis_id", analysisId);
 
         let currentToken = authToken;
@@ -111,7 +111,7 @@ export default function Workspace() {
     // Construct the payload structure corresponding to AnalyzeRequest matching the backend
     const payload = {
       analysis_id: analysisId || "ana_" + Math.random().toString(36).substr(2, 9),
-      customer: { name: "Acme Corp Ltd.", id: "cust_123", industry: "Manufacturing", constitution: "Private Limited" },
+      customer: { name: "Acme Corp Ltd.", id: "cust_123", industry: "Manufacturing", constitution: "Private Limited", pan: "ABCDE1234F", cin: "U74999MH2023PTC123456", gstin: "27ABCDE1234F1Z5" },
       financials: { operating_income: 5000000, non_operating_income: 0, short_term_liab: 1000000, long_term_liab: 2000000, contingent_liab: 0, internal_rating: "BBB", external_rating: "BB+", bureau_score: 750, current_assets: 3000000, fixed_assets: 4000000, intangible_assets: 0 },
       facility: { amount: 2000000, currency: "INR", purpose: "Working Capital", term_months: 24, repayment_method: "EMI" },
       collateral_list: [{ type: "Real Estate", value: 2500000 }],
@@ -138,6 +138,9 @@ export default function Workspace() {
       if (!res.ok) throw new Error("Analysis failed");
       const data = await res.json();
       setAnalysisResult(data);
+      if (data.features_used && data.features_used.monthly_variance) {
+        setReconciliationData(data.features_used.monthly_variance);
+      }
     } catch (err) {
       console.error(err);
       // Fallback local state if backend is down
@@ -166,8 +169,14 @@ export default function Workspace() {
     router.push(`/cam-terminal/${analysisResult.analysis_id}`);
   };
 
-  // Mock Radar Data mapped from SHAP or defaults
-  const radarData = [
+  // Dynamic Radar Data mapped from feature calculations
+  const radarData = analysisResult?.features_used ? [
+    { subject: 'Character', A: Math.min((analysisResult.features_used.bureau_score / 900) * 100, 100) || 85, fullMark: 100 },
+    { subject: 'Capacity', A: Math.min((analysisResult.features_used.dscr || 1.5) / 2 * 100, 100), fullMark: 100 },
+    { subject: 'Capital', A: Math.max(100 - ((analysisResult.features_used.debt_to_equity || 1) * 20), 0), fullMark: 100 },
+    { subject: 'Collateral', A: Math.min((analysisResult.features_used.collateral_coverage || 1) * 100, 100), fullMark: 100 },
+    { subject: 'Conditions', A: 100 - ((analysisResult.features_used.industry_risk || 0.3) * 100), fullMark: 100 },
+  ] : [
     { subject: 'Character', A: 85, fullMark: 100 },
     { subject: 'Capacity', A: 70, fullMark: 100 },
     { subject: 'Capital', A: 90, fullMark: 100 },

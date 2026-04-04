@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import asyncio
 from datetime import datetime, timezone
@@ -11,27 +11,17 @@ from pydantic import BaseModel, Field
 from services.event_bus import TERMINAL_EVENT_TYPES, execution_event_broker
 from services.workflow_engine import WorkflowEngine, WorkflowEngineError
 
-try:
-    from database import SessionLocal
-    from db_models import (
-        DeadLetterExecution,
-        ExecutionRun,
-        NodeExecutionLog,
-        WorkflowDefinition,
-        WorkflowEdgeDefinition,
-        WorkflowNodeDefinition,
-    )
+from async_database import AsyncSessionLocal as async_session_maker
+from async_models import (
+    DeadLetterExecution,
+    ExecutionRun,
+    NodeExecutionLog,
+    WorkflowDefinition,
+    WorkflowEdgeDefinition,
+    WorkflowNodeDefinition,
+)
 
-    DB_AVAILABLE = True
-except ImportError:
-    SessionLocal = None
-    WorkflowDefinition = None
-    WorkflowNodeDefinition = None
-    WorkflowEdgeDefinition = None
-    ExecutionRun = None
-    NodeExecutionLog = None
-    DeadLetterExecution = None
-    DB_AVAILABLE = False
+DB_AVAILABLE = True
 
 
 router = APIRouter()

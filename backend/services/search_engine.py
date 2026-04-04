@@ -30,17 +30,13 @@ class HybridSearchEngine:
             return
             
         # 1. Semantic Search Components (Dense Vectors)
-        # Using a lightweight, fast sentence transformer model
-        if SentenceTransformer:
-            self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-            self.embedding_dim = self.embedder.get_sentence_embedding_dimension()
-            # FAISS Index for Inner Product (Cosine Similarity if vectors are normalized)
-            self.index = faiss.IndexFlatIP(self.embedding_dim)
+        self.embedder = None
+        self.embedding_dim = None
+        self.index = None
         
         # 2. Keyword Search Components (Sparse Vectors)
-        if TfidfVectorizer:
-            self.tfidf = TfidfVectorizer(stop_words='english', lowercase=True)
-            self.tfidf_matrix = None
+        self.tfidf = None
+        self.tfidf_matrix = None
             
         # 3. ID Mapping
         self.record_ids: List[str] = []
@@ -54,6 +50,14 @@ class HybridSearchEngine:
         if not SentenceTransformer or not faiss or not TfidfVectorizer:
             print("Warning: Search dependencies missing. Engine won't initialize.")
             return
+
+        if not self.embedder and SentenceTransformer:
+            self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
+            self.embedding_dim = self.embedder.get_sentence_embedding_dimension()
+            self.index = faiss.IndexFlatIP(self.embedding_dim)
+            
+        if not self.tfidf and TfidfVectorizer:
+            self.tfidf = TfidfVectorizer(stop_words='english', lowercase=True)
 
         records = db.query(CreditRecord).all()
         if not records:
@@ -85,15 +89,15 @@ class HybridSearchEngine:
             }
 
         # Build Semantic Index
-        # Run blocking embedding generation in threadpool
-        embeddings = await asyncio.to_thread(self.embedder.encode, texts, convert_to_numpy=True)
-        # Normalize vectors for cosine similarity in FAISS
-        faiss.normalize_L2(embeddings)
-        self.index.reset()
-        self.index.add(embeddings)
+        if self.embedder:
+            embeddings = await asyncio.to_thread(self.embedder.encode, texts, convert_to_numpy=True)
+            faiss.normalize_L2(embeddings)
+            self.index.reset()
+            self.index.add(embeddings)
 
         # Build Keyword Index
-        self.tfidf_matrix = await asyncio.to_thread(self.tfidf.fit_transform, texts)
+        if self.tfidf:
+            self.tfidf_matrix = await asyncio.to_thread(self.tfidf.fit_transform, texts)
         
         self.is_ready = True
         print(f"Hybrid Search Engine ready with {len(self.record_ids)} records.")

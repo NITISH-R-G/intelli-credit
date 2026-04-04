@@ -17,6 +17,9 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    Float,
+    Boolean,
+    JSON,
     UniqueConstraint,
 )
 from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
@@ -210,3 +213,112 @@ class AuditLog(AsyncBase):
 
     def __repr__(self) -> str:
         return f"<AuditLog {self.action} on {self.entity_type}/{self.entity_id}>"
+
+
+class AnalysisSession(AsyncBase):
+    """Stores the state of a document extraction and risk analysis session."""
+    __tablename__ = "analysis_sessions"
+
+    id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    tenant_id: Mapped[str] = mapped_column(String(128), index=True)
+    status: Mapped[str] = mapped_column(String(64), default="INITIATED")
+    raw_extracts: Mapped[dict] = mapped_column(JSON, default=dict)
+    features: Mapped[dict] = mapped_column(JSON, default=dict)
+    results: Mapped[dict] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, onupdate=_utcnow)
+
+
+class WorkflowDefinition(AsyncBase):
+    __tablename__ = "workflow_definitions"
+
+    id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), default="Untitled Workflow")
+    status: Mapped[str] = mapped_column(String(32), default="draft")
+    definition_json: Mapped[dict] = mapped_column(JSON, default=dict)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, onupdate=_utcnow)
+
+    nodes: Mapped[list["WorkflowNodeDefinition"]] = relationship(back_populates="workflow", cascade="all, delete-orphan")
+    edges: Mapped[list["WorkflowEdgeDefinition"]] = relationship(back_populates="workflow", cascade="all, delete-orphan")
+
+
+class WorkflowNodeDefinition(AsyncBase):
+    __tablename__ = "workflow_node_definitions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    workflow_id: Mapped[str] = mapped_column(String(128), ForeignKey("workflow_definitions.id", ondelete="CASCADE"), index=True)
+    node_id: Mapped[str] = mapped_column(String(128))
+    node_type: Mapped[str] = mapped_column(String(64))
+    label: Mapped[str | None] = mapped_column(String(255))
+    position_x: Mapped[float] = mapped_column(Float, default=0)
+    position_y: Mapped[float] = mapped_column(Float, default=0)
+    config_json: Mapped[dict] = mapped_column(JSON, default=dict)
+    execution_config_json: Mapped[dict] = mapped_column(JSON, default=dict)
+
+    workflow: Mapped["WorkflowDefinition"] = relationship(back_populates="nodes")
+
+
+class WorkflowEdgeDefinition(AsyncBase):
+    __tablename__ = "workflow_edge_definitions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    workflow_id: Mapped[str] = mapped_column(String(128), ForeignKey("workflow_definitions.id", ondelete="CASCADE"), index=True)
+    edge_id: Mapped[str] = mapped_column(String(128))
+    source_node_id: Mapped[str] = mapped_column(String(128))
+    target_node_id: Mapped[str] = mapped_column(String(128))
+    source_handle: Mapped[str | None] = mapped_column(String(64))
+    target_handle: Mapped[str | None] = mapped_column(String(64))
+    edge_type: Mapped[str | None] = mapped_column(String(64))
+    config_json: Mapped[dict] = mapped_column(JSON, default=dict)
+
+    workflow: Mapped["WorkflowDefinition"] = relationship(back_populates="edges")
+
+
+class ExecutionRun(AsyncBase):
+    __tablename__ = "execution_runs"
+
+    id: Mapped[str] = mapped_column(String(128), primary_key=True)
+    workflow_id: Mapped[str | None] = mapped_column(String(128), ForeignKey("workflow_definitions.id", ondelete="SET NULL"), nullable=True)
+    status: Mapped[str] = mapped_column(String(32), default="queued")
+    initial_payload_json: Mapped[dict] = mapped_column(JSON, default=dict)
+    final_payload_json: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    error_message: Mapped[str | None] = mapped_column(Text)
+    tokens_consumed: Mapped[int] = mapped_column(Integer, default=0)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    duration_ms: Mapped[int | None] = mapped_column(Integer)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow, onupdate=_utcnow)
+
+    workflow: Mapped["WorkflowDefinition | None"] = relationship()
+
+
+class NodeExecutionLog(AsyncBase):
+    __tablename__ = "node_execution_logs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    execution_id: Mapped[str] = mapped_column(String(128), ForeignKey("execution_runs.id", ondelete="CASCADE"), index=True)
+    workflow_id: Mapped[str | None] = mapped_column(String(128))
+    node_id: Mapped[str] = mapped_column(String(128))
+    node_type: Mapped[str] = mapped_column(String(64))
+    event_type: Mapped[str] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(32))
+    attempt: Mapped[int] = mapped_column(Integer, default=1)
+    input_payload_json: Mapped[dict | None] = mapped_column(JSON)
+    output_payload_json: Mapped[dict | None] = mapped_column(JSON)
+    source_edges_json: Mapped[list | None] = mapped_column(JSON)
+    error_message: Mapped[str | None] = mapped_column(Text)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    duration_ms: Mapped[int | None] = mapped_column(Integer)
+
+
+class DeadLetterExecution(AsyncBase):
+    __tablename__ = "dead_letter_executions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    execution_id: Mapped[str] = mapped_column(String(128), ForeignKey("execution_runs.id", ondelete="CASCADE"), unique=True)
+    workflow_id: Mapped[str | None] = mapped_column(String(128))
+    failure_stage: Mapped[str] = mapped_column(String(64), default="workflow")
+    reason: Mapped[str] = mapped_column(Text)
+    payload_json: Mapped[dict | None] = mapped_column(JSON)
