@@ -1,0 +1,41 @@
+name: Autonomous Repository Updates
+
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight
+
+jobs:
+  auto-document:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Script Dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run Repository Analyzer
+        run: python scripts/repo_analyzer.py
+
+      - name: Run Diagram Generator
+        run: python scripts/diagram_generator.py
+
+      - name: Run Knowledge Graph Generator
+        run: python scripts/knowledge_graph.py
+
+      - name: Run AI Documentation Agent
+        run: python scripts/ai_doc_agent.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Auto-update repository documentation and diagrams"
+          file_pattern: "README.md docs/* repo_state.json"

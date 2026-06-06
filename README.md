@@ -1,67 +1,56 @@
-# Intelli-Credit - Intelligent Corporate Underwriting
+# Autonomous Repository Overview
 
-> An autonomous AI Credit Officer designed to simulate how Tier-1 bank credit committees operate.
+This repository is continuously analyzed and documented by an AI agent.
 
-Intelli-Credit is an end-to-end B2B credit decisioning platform. It ingests structured and unstructured borrower financial data, conducts autonomous web-scale due diligence, computes an explainable composite risk score using Machine Learning ensembles, simulates stress tests evaluating RAROC capital impact, and automatically generates a structured, downloadable Credit Appraisal Memo (CAM) in PDF format.
+![Build Status](https://img.shields.io/github/actions/workflow/status/owner/repo/ci-cd-automation.yml)
+![Documentation](https://img.shields.io/badge/docs-auto--generated-blue)
 
-## 🔥 Key Differentiators
+## Project Overview
 
-1.  **"AI Credit Officer" Persona & LLM Integration**: The system isn't just a traditional ML pipeline. It uses **Google Gemini** to extract unstructured data, read financial PDFs, and automatically author conversational narrative summaries for risk and compliance.
-2.  **Web-Scale Research Simulation**: Includes NLP sentiment analysis (using FinBERT), regulatory filings intelligence, and ESG scores.
-3.  **Modular Decision Studio**: A dynamic workflow engine that allows credit risk managers to visually construct underwriting logic, configure dynamic scoring rules, and trigger external webhooks interactively.
-4.  **Capital Impact (RAROC) Simulation**: Elevates from basic scoring to bank portfolio management by assessing Risk-Weighted Assets (RWA) and tier capital requirements.
-5.  **SHAP-Based Explainability**: Avoids "black box" models. The top contributing risk drivers are extracted for every decision.
+This repository is an enterprise-scale application. Based on the automated analysis, it is built using:
+**Frameworks**: React, Next.js, FastAPI
 
-## 🏗 System Architecture
+## Architecture
 
-The project consists of a Python FastAPI backend acting as the Machine Learning, LLM, and pipeline orchestration layer, paired with a modern Next.js frontend featuring real-time state synchronization, drag-and-drop workflow canvases, and Firebase authentication.
+Please see the [Architecture Diagram](docs/architecture_diagram.md) and [Dependencies Diagram](docs/dependencies_diagram.md) for automated visual representations of the system.
 
-### Core Modules
-*   **Ingestion Engine**: Parses financial PDFs, Bureau JSONs, and Bank Statement CSVs (using Gemini Vision & regex).
-*   **Dynamic Scorer & Rules Engine**: Evaluates nested risk rules built via the Decision Studio UI.
-*   **LLM Research Agent**: Leverages a LangChain-powered agent to perform RAG-based Vector Search and external intelligence aggregation. 
-*   **Risk Synthesis**: Combines ML Probability of Default (Gradient Boosting), qualitative LLM summaries, and macro-economic factors.
+## Setup Instructions
 
-## 🚀 Quick Start (Local Development)
+1. Clone the repository
+2. Install dependencies based on the frameworks detected (`npm install` for frontend, `pip install -r requirements.txt` for backend).
+3. Set up the following environment variables:
 
-### 1. Backend Setup
-```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate  # On Windows
-pip install -r requirements.txt
-```
-*Note: A `.env` file is required in the backend containing your `GEMINI_API_KEY`, `POSTGRES_USER`, and database strings for Alembic migrations.*
+### Environment Variables
 
-Run the FastAPI server:
-```bash
-uvicorn main:app --reload --port 8000
-```
+- `LLM_BASE_URL`
+- `LLM_MODEL_NAME`
+- `NEO4J_USERNAME`
+- `MCA_API_URL`
+- `ECOURTS_API_URL`
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `HUGGINGFACE_API_TOKEN`
+- `GEMINI_MODEL`
+- `CIBIL_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `NEXT_PUBLIC_API_URL`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `SIGNZY_API_KEY`
+- `GROQ_API_KEY`
+- `LLM_API_KEY`
+- `GEMINI_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEO4J_URI`
+- `KARZA_API_KEY`
+- `NEO4J_PASSWORD`
+- `ASYNC_DATABASE_URL`
+- `TAVILY_API_KEY`
 
-### 2. Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-*Note: Ensure your `.env.local` contains valid Firebase configuration keys (`NEXT_PUBLIC_FIREBASE_API_KEY`, etc.) for user authentication to function.*
+## Contribution Guide
 
-Access the platform at `http://localhost:3000`.
+This project follows an automated CI/CD pipeline. Please ensure all tests and linters pass before submitting a Pull Request. An AI PR Reviewer will automatically assess architectural impacts.
 
-## 🧠 Using the Platform
+## Repository Knowledge Graph
 
-1.  **Authenticate**: Use the Firebase login page to sign in to the dashboard.
-2.  **Upload & Ingest**: Go to the New Proposal flow. Upload a financial PDF or Bureau data. The system uses Gemini Vision for intelligent OCR.
-3.  **Build Workflows**: Use the **Decision Studio** to visually drag and drop Risk Policies and Decision Nodes.
-4.  **Review the Output**:
-    - Observe the final decision (APPROVE / CONDITIONAL / REJECT).
-    - Review the Stress Test simulator and SHAP charts.
-    - Check the Governance Audit Trail.
-    - Click **"Generate CAM"** to receive the final professionally formatted Credit Appraisal Memo PDF.
-
-## 🛠 Tech Stack
-
-- **Machine Learning & AI**: Scikit-Learn (Gradient Boosting), SHAP, HuggingFace (`ProsusAI/finbert`), Google Gemini API, LangChain, FAISS (Vector DB)
-- **Backend API**: Python 3.11, FastAPI, Uvicorn, PostgreSQL (with asyncpg & Alembic), ReportLab
-- **Frontend App**: Next.js (App Router), React 18, TailwindCSS, Recharts, React Flow (Nodes), Zustand (State Management), Firebase Auth
-- **Infra**: Context-driven REST APIs, Webhooks, Docker (Optional)
+Explore the module relationships in the [Knowledge Graph](docs/knowledge_graph.md).

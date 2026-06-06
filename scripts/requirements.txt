@@ -1,0 +1,6 @@
+requests
+pyyaml
+networkx
+openai
+pydot
+graphviz

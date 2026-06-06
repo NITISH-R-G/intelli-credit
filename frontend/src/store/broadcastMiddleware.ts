@@ -16,7 +16,7 @@ export const broadcast = <T>(
     }
 
     // Intercept the native set function
-    const modifiedSet: typeof set = (partial: any, replace?: any, isRemoteSync?: boolean) => {
+    const modifiedSet = (partial: any, replace?: any, isRemoteSync?: boolean) => {
         // Apply state locally
         set(partial, replace);
 
@@ -42,5 +42,5 @@ export const broadcast = <T>(
         modifiedSet(partial as T, replace as boolean, false);
     };
 
-    return config(modifiedSet, get, api);
+    return config(modifiedSet as any, get, api);
 };
