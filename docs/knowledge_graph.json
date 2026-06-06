@@ -1,0 +1,3198 @@
+{
+  "nodes": [
+    {
+      "id": ".gitignore",
+      "type": "file"
+    },
+    {
+      "id": "firebase.json",
+      "type": "file"
+    },
+    {
+      "id": ".firebaserc",
+      "type": "file"
+    },
+    {
+      "id": "firebase_config.json",
+      "type": "file"
+    },
+    {
+      "id": "repo_state.json",
+      "type": "file"
+    },
+    {
+      "id": "docker-compose.yml",
+      "type": "file"
+    },
+    {
+      "id": "architecture.md",
+      "type": "file"
+    },
+    {
+      "id": "README.md",
+      "type": "file"
+    },
+    {
+      "id": "backend/async_models.py",
+      "type": "file"
+    },
+    {
+      "id": "__future__",
+      "type": "module"
+    },
+    {
+      "id": "enum",
+      "type": "module"
+    },
+    {
+      "id": "uuid",
+      "type": "module"
+    },
+    {
+      "id": "datetime",
+      "type": "module"
+    },
+    {
+      "id": "sqlalchemy",
+      "type": "module"
+    },
+    {
+      "id": "sqlalchemy.dialects.postgresql",
+      "type": "module"
+    },
+    {
+      "id": "sqlalchemy.orm",
+      "type": "module"
+    },
+    {
+      "id": "async_database",
+      "type": "module"
+    },
+    {
+      "id": "typing",
+      "type": "module"
+    },
+    {
+      "id": "sqlalchemy.types",
+      "type": "module"
+    },
+    {
+      "id": "backend/main.py",
+      "type": "file"
+    },
+    {
+      "id": "sys",
+      "type": "module"
+    },
+    {
+      "id": "unittest.mock",
+      "type": "module"
+    },
+    {
+      "id": "importlib",
+      "type": "module"
+    },
+    {
+      "id": "core.config",
+      "type": "module"
+    },
+    {
+      "id": "security.auth",
+      "type": "module"
+    },
+    {
+      "id": "fastapi",
+      "type": "module"
+    },
+    {
+      "id": "fastapi.middleware.cors",
+      "type": "module"
+    },
+    {
+      "id": "uvicorn",
+      "type": "module"
+    },
+    {
+      "id": "async_models",
+      "type": "module"
+    },
+    {
+      "id": "middleware.idempotency",
+      "type": "module"
+    },
+    {
+      "id": "os",
+      "type": "module"
+    },
+    {
+      "id": "database",
+      "type": "module"
+    },
+    {
+      "id": "backend/schemas.py",
+      "type": "file"
+    },
+    {
+      "id": "pydantic",
+      "type": "module"
+    },
+    {
+      "id": "backend/.env.example",
+      "type": "file"
+    },
+    {
+      "id": "backend/Dockerfile",
+      "type": "file"
+    },
+    {
+      "id": "backend/async_database.py",
+      "type": "file"
+    },
+    {
+      "id": "sqlalchemy.ext.asyncio",
+      "type": "module"
+    },
+    {
+      "id": "backend/schemas_v2.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/database.py",
+      "type": "file"
+    },
+    {
+      "id": "db_models",
+      "type": "module"
+    },
+    {
+      "id": "backend/dynamic_scorer.py",
+      "type": "file"
+    },
+    {
+      "id": "operator",
+      "type": "module"
+    },
+    {
+      "id": "backend/requirements.txt",
+      "type": "file"
+    },
+    {
+      "id": "backend/test_execution.py",
+      "type": "file"
+    },
+    {
+      "id": "asyncio",
+      "type": "module"
+    },
+    {
+      "id": "time",
+      "type": "module"
+    },
+    {
+      "id": "fastapi.testclient",
+      "type": "module"
+    },
+    {
+      "id": "main",
+      "type": "module"
+    },
+    {
+      "id": "backend/alembic.ini",
+      "type": "file"
+    },
+    {
+      "id": "backend/test_gemini.py",
+      "type": "file"
+    },
+    {
+      "id": "urllib.request",
+      "type": "module"
+    },
+    {
+      "id": "json",
+      "type": "module"
+    },
+    {
+      "id": "backend/research_agent.py",
+      "type": "file"
+    },
+    {
+      "id": "httpx",
+      "type": "module"
+    },
+    {
+      "id": "langchain_openai",
+      "type": "module"
+    },
+    {
+      "id": "langchain_core.prompts",
+      "type": "module"
+    },
+    {
+      "id": "tavily",
+      "type": "module"
+    },
+    {
+      "id": "backend/reproduce_import_error.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/test_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/test_aggregator.py",
+      "type": "file"
+    },
+    {
+      "id": "services.external_aggregator",
+      "type": "module"
+    },
+    {
+      "id": "backend/db_models.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/store.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/services/decision_studio_core.py",
+      "type": "file"
+    },
+    {
+      "id": "groq",
+      "type": "module"
+    },
+    {
+      "id": "schemas_v2",
+      "type": "module"
+    },
+    {
+      "id": "dynamic_scorer",
+      "type": "module"
+    },
+    {
+      "id": "services.workflow_engine",
+      "type": "module"
+    },
+    {
+      "id": "services.event_bus",
+      "type": "module"
+    },
+    {
+      "id": "backend/services/external_aggregator.py",
+      "type": "file"
+    },
+    {
+      "id": "logging",
+      "type": "module"
+    },
+    {
+      "id": "backend/services/search_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "math",
+      "type": "module"
+    },
+    {
+      "id": "numpy",
+      "type": "module"
+    },
+    {
+      "id": "sqlalchemy.future",
+      "type": "module"
+    },
+    {
+      "id": "sentence_transformers",
+      "type": "module"
+    },
+    {
+      "id": "faiss",
+      "type": "module"
+    },
+    {
+      "id": "sklearn.feature_extraction.text",
+      "type": "module"
+    },
+    {
+      "id": "backend/services/event_bus.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/services/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/services/research_agent.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/services/execution_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "xml.etree.ElementTree",
+      "type": "module"
+    },
+    {
+      "id": "simpleeval",
+      "type": "module"
+    },
+    {
+      "id": "backend/services/gst_reconciliation.py",
+      "type": "file"
+    },
+    {
+      "id": "pandas",
+      "type": "module"
+    },
+    {
+      "id": "re",
+      "type": "module"
+    },
+    {
+      "id": "difflib",
+      "type": "module"
+    },
+    {
+      "id": "backend/services/workflow_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/alembic/script.py.mako",
+      "type": "file"
+    },
+    {
+      "id": "backend/alembic/env.py",
+      "type": "file"
+    },
+    {
+      "id": "logging.config",
+      "type": "module"
+    },
+    {
+      "id": "alembic",
+      "type": "module"
+    },
+    {
+      "id": "backend/alembic/versions/001_create_core_tables.py",
+      "type": "file"
+    },
+    {
+      "id": "sqlalchemy.dialects",
+      "type": "module"
+    },
+    {
+      "id": "backend/modules/llm_external_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/decision_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/ml_engine.py",
+      "type": "file"
+    },
+    {
+      "id": "joblib",
+      "type": "module"
+    },
+    {
+      "id": "xgboost",
+      "type": "module"
+    },
+    {
+      "id": "shap",
+      "type": "module"
+    },
+    {
+      "id": "backend/modules/risk_synthesis.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/llm_five_c_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/web_research.py",
+      "type": "file"
+    },
+    {
+      "id": "base64",
+      "type": "module"
+    },
+    {
+      "id": "urllib.parse",
+      "type": "module"
+    },
+    {
+      "id": "transformers",
+      "type": "module"
+    },
+    {
+      "id": "bs4",
+      "type": "module"
+    },
+    {
+      "id": "backend/modules/cam_generator.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/llm_qualitative_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "textblob",
+      "type": "module"
+    },
+    {
+      "id": "backend/modules/stress_test.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/feature_store.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/llm_risk_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/llm_financial_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/modules/ingestion.py",
+      "type": "file"
+    },
+    {
+      "id": "io",
+      "type": "module"
+    },
+    {
+      "id": "pdfplumber",
+      "type": "module"
+    },
+    {
+      "id": "pytesseract",
+      "type": "module"
+    },
+    {
+      "id": "pdf2image",
+      "type": "module"
+    },
+    {
+      "id": "databricks",
+      "type": "module"
+    },
+    {
+      "id": "scipy.stats",
+      "type": "module"
+    },
+    {
+      "id": "backend/utils/expression_evaluator.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/utils/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/utils/pdf_builder.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/databricks_pipeline/gstr_reconciliation.py",
+      "type": "file"
+    },
+    {
+      "id": "pyspark.sql",
+      "type": "module"
+    },
+    {
+      "id": "pyspark.sql.functions",
+      "type": "module"
+    },
+    {
+      "id": "backend/core/config.py",
+      "type": "file"
+    },
+    {
+      "id": "pydantic_settings",
+      "type": "module"
+    },
+    {
+      "id": "backend/security/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/security/auth.py",
+      "type": "file"
+    },
+    {
+      "id": "fastapi.security",
+      "type": "module"
+    },
+    {
+      "id": "firebase_admin",
+      "type": "module"
+    },
+    {
+      "id": "backend/security/credential_vault.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/middleware/idempotency.py",
+      "type": "file"
+    },
+    {
+      "id": "cachetools",
+      "type": "module"
+    },
+    {
+      "id": "starlette.middleware.base",
+      "type": "module"
+    },
+    {
+      "id": "backend/models/pd_model.joblib",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/limit_model.joblib",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/pd_metrics.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/pd_scaler.joblib",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/limit_scaler.joblib",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/bias_report.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/models/limit_metrics.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/raw/synthetic_borrowers.csv",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/raw/web_research.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/raw/industry_macro.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/curated/borrowers_curated.csv",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/features/LOS-ouvsfgwvs.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/features/LOS-7h3m2gem6.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/features/LOS-nphzhbs1w.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/data/features/1a32dfed-5240-4062-a893-c935cacecb2d.json",
+      "type": "file"
+    },
+    {
+      "id": "backend/routers/analyze.py",
+      "type": "file"
+    },
+    {
+      "id": "modules.decision_engine",
+      "type": "module"
+    },
+    {
+      "id": "modules.feature_store",
+      "type": "module"
+    },
+    {
+      "id": "modules.ingestion",
+      "type": "module"
+    },
+    {
+      "id": "modules.ml_engine",
+      "type": "module"
+    },
+    {
+      "id": "modules.risk_synthesis",
+      "type": "module"
+    },
+    {
+      "id": "modules.stress_test",
+      "type": "module"
+    },
+    {
+      "id": "modules.web_research",
+      "type": "module"
+    },
+    {
+      "id": "modules.llm_five_c_analyzer",
+      "type": "module"
+    },
+    {
+      "id": "backend/routers/applications.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/routers/portfolio.py",
+      "type": "file"
+    },
+    {
+      "id": "services.search_engine",
+      "type": "module"
+    },
+    {
+      "id": "backend/routers/decisions.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/routers/studio.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/routers/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/routers/cam.py",
+      "type": "file"
+    },
+    {
+      "id": "fastapi.responses",
+      "type": "module"
+    },
+    {
+      "id": "modules.cam_generator",
+      "type": "module"
+    },
+    {
+      "id": "utils.pdf_builder",
+      "type": "module"
+    },
+    {
+      "id": "routers.analyze",
+      "type": "module"
+    },
+    {
+      "id": "backend/routers/research.py",
+      "type": "file"
+    },
+    {
+      "id": "research_agent",
+      "type": "module"
+    },
+    {
+      "id": "backend/training/train_models.py",
+      "type": "file"
+    },
+    {
+      "id": "sklearn.model_selection",
+      "type": "module"
+    },
+    {
+      "id": "sklearn.linear_model",
+      "type": "module"
+    },
+    {
+      "id": "sklearn.ensemble",
+      "type": "module"
+    },
+    {
+      "id": "sklearn.metrics",
+      "type": "module"
+    },
+    {
+      "id": "sklearn.preprocessing",
+      "type": "module"
+    },
+    {
+      "id": "warnings",
+      "type": "module"
+    },
+    {
+      "id": "generate_synthetic_data",
+      "type": "module"
+    },
+    {
+      "id": "backend/training/generate_synthetic_data.py",
+      "type": "file"
+    },
+    {
+      "id": "backend/training/__init__.py",
+      "type": "file"
+    },
+    {
+      "id": "docs/dependencies_diagram.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/knowledge_graph.json",
+      "type": "file"
+    },
+    {
+      "id": "docs/architecture_diagram.md",
+      "type": "file"
+    },
+    {
+      "id": "docs/knowledge_graph.md",
+      "type": "file"
+    },
+    {
+      "id": "scripts/repo_analyzer.py",
+      "type": "file"
+    },
+    {
+      "id": "scripts/diagram_generator.py",
+      "type": "file"
+    },
+    {
+      "id": "scripts/ai_doc_agent.py",
+      "type": "file"
+    },
+    {
+      "id": "scripts/requirements.txt",
+      "type": "file"
+    },
+    {
+      "id": "scripts/knowledge_graph.py",
+      "type": "file"
+    },
+    {
+      "id": "ast",
+      "type": "module"
+    },
+    {
+      "id": "frontend/.gitignore",
+      "type": "file"
+    },
+    {
+      "id": "frontend/package-lock.json",
+      "type": "file"
+    },
+    {
+      "id": "frontend/Dockerfile",
+      "type": "file"
+    },
+    {
+      "id": "frontend/jsconfig.json",
+      "type": "file"
+    },
+    {
+      "id": "frontend/components.json",
+      "type": "file"
+    },
+    {
+      "id": "frontend/eslint.config.mjs",
+      "type": "file"
+    },
+    {
+      "id": "frontend/postcss.config.mjs",
+      "type": "file"
+    },
+    {
+      "id": "frontend/next.config.mjs",
+      "type": "file"
+    },
+    {
+      "id": "frontend/tsconfig.json",
+      "type": "file"
+    },
+    {
+      "id": "frontend/package.json",
+      "type": "file"
+    },
+    {
+      "id": "frontend/README.md",
+      "type": "file"
+    },
+    {
+      "id": "frontend/public/globe.svg",
+      "type": "file"
+    },
+    {
+      "id": "frontend/public/vercel.svg",
+      "type": "file"
+    },
+    {
+      "id": "frontend/public/window.svg",
+      "type": "file"
+    },
+    {
+      "id": "frontend/public/file.svg",
+      "type": "file"
+    },
+    {
+      "id": "frontend/public/next.svg",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/FlowStep.js",
+      "type": "file"
+    },
+    {
+      "id": "framer-motion",
+      "type": "module"
+    },
+    {
+      "id": "react",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/TabsDemo.tsx",
+      "type": "file"
+    },
+    {
+      "id": "@/components/ui/tabs",
+      "type": "module"
+    },
+    {
+      "id": "lucide-react",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/DocumentUploader.js",
+      "type": "file"
+    },
+    {
+      "id": "react-dropzone",
+      "type": "module"
+    },
+    {
+      "id": "@/lib/api",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/HeroSection.js",
+      "type": "file"
+    },
+    {
+      "id": "next/navigation",
+      "type": "module"
+    },
+    {
+      "id": "./ui/Button",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/ScenarioSimulator.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/ChatbotWidget.js",
+      "type": "file"
+    },
+    {
+      "id": "@/components/ui/animated-ai-chat",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/FeatureCard.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/FlowTimeline.js",
+      "type": "file"
+    },
+    {
+      "id": "./FlowStep",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/NetworkGraph.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/AgentChat.jsx",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/Providers.js",
+      "type": "file"
+    },
+    {
+      "id": "@tanstack/react-query",
+      "type": "module"
+    },
+    {
+      "id": "@/context/AuthContext",
+      "type": "module"
+    },
+    {
+      "id": "@/hooks/useTabSync",
+      "type": "module"
+    },
+    {
+      "id": "@/components/ChatbotWidget",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/SimulationGraph.jsx",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/AuditTrail.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/RiskGauge.js",
+      "type": "file"
+    },
+    {
+      "id": "recharts",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/Sidebar.js",
+      "type": "file"
+    },
+    {
+      "id": "next/link",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/ShapChart.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/AnalysisSummary.js",
+      "type": "file"
+    },
+    {
+      "id": "@/components/ui/Card",
+      "type": "module"
+    },
+    {
+      "id": "@/components/ui/Button",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/modals/DataMappingModal.js",
+      "type": "file"
+    },
+    {
+      "id": "@/store/useWorkflowStore",
+      "type": "module"
+    },
+    {
+      "id": "@/lib/ingestion",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/decision-studio/PolicyConditionNode.jsx",
+      "type": "file"
+    },
+    {
+      "id": "@xyflow/react",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/decision-studio/PolicyDecisionNode.jsx",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "type": "file"
+    },
+    {
+      "id": "@/lib/utils",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/ui/Card.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/ui/tabs.tsx",
+      "type": "file"
+    },
+    {
+      "id": "@radix-ui/react-tabs",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/ui/Badge.js",
+      "type": "file"
+    },
+    {
+      "id": "class-variance-authority",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/ui/demo.tsx",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/ui/Button.js",
+      "type": "file"
+    },
+    {
+      "id": "@radix-ui/react-slot",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/studio/NodeSchema.ts",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/studio/PropertiesSidebar.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/studio/NodeLibrary.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/studio/CustomWidgetRenderer.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/studio/Workspace.js",
+      "type": "file"
+    },
+    {
+      "id": "@/store/useDecisionStore",
+      "type": "module"
+    },
+    {
+      "id": "zustand/react/shallow",
+      "type": "module"
+    },
+    {
+      "id": "./CustomWidgetRenderer",
+      "type": "module"
+    },
+    {
+      "id": "./NodeSchema",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/components/studio/ExecutionPanel.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/components/studio/nodes.js",
+      "type": "file"
+    },
+    {
+      "id": "reactflow",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/page.js",
+      "type": "file"
+    },
+    {
+      "id": "@/components/ui/Badge",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/layout.js",
+      "type": "file"
+    },
+    {
+      "id": "next/font/google",
+      "type": "module"
+    },
+    {
+      "id": "@/components/Sidebar",
+      "type": "module"
+    },
+    {
+      "id": "@/components/Providers",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/favicon.ico",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/globals.css",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/portfolio/page.js",
+      "type": "file"
+    },
+    {
+      "id": "@/hooks/useIntelligentSearch",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/pipeline/page.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/analyze/page.js",
+      "type": "file"
+    },
+    {
+      "id": "@/components/AnalysisSummary",
+      "type": "module"
+    },
+    {
+      "id": "@/components/AuditTrail",
+      "type": "module"
+    },
+    {
+      "id": "@/components/RiskGauge",
+      "type": "module"
+    },
+    {
+      "id": "@/components/ScenarioSimulator",
+      "type": "module"
+    },
+    {
+      "id": "@/components/ShapChart",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/connections/page.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/models/page.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/review/page.js",
+      "type": "file"
+    },
+    {
+      "id": "../../context/AuthContext",
+      "type": "module"
+    },
+    {
+      "id": "date-fns",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/review/[id]/page.js",
+      "type": "file"
+    },
+    {
+      "id": "../../../context/AuthContext",
+      "type": "module"
+    },
+    {
+      "id": "react-diff-viewer-continued",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/cam-terminal/[id]/page.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/cam-terminal/[id]/layout.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/app/login/page.js",
+      "type": "file"
+    },
+    {
+      "id": "@/lib/firebase",
+      "type": "module"
+    },
+    {
+      "id": "firebase/auth",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/app/proposal/new/page.js",
+      "type": "file"
+    },
+    {
+      "id": "@/components/DocumentUploader",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/hooks/useTabSync.ts",
+      "type": "file"
+    },
+    {
+      "id": "../store/useStore",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/hooks/useIntelligentSearch.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/store/useAppStore.js",
+      "type": "file"
+    },
+    {
+      "id": "zustand",
+      "type": "module"
+    },
+    {
+      "id": "zustand/middleware",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/store/broadcastMiddleware.ts",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/store/useDecisionStore.ts",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/store/useStore.ts",
+      "type": "file"
+    },
+    {
+      "id": "./broadcastMiddleware",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/store/useWorkflowStore.js",
+      "type": "file"
+    },
+    {
+      "id": "frontend/src/context/AuthContext.js",
+      "type": "file"
+    },
+    {
+      "id": "../lib/firebase",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/lib/api.js",
+      "type": "file"
+    },
+    {
+      "id": "axios",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/lib/firebase.js",
+      "type": "file"
+    },
+    {
+      "id": "firebase/app",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/lib/utils.js",
+      "type": "file"
+    },
+    {
+      "id": "clsx",
+      "type": "module"
+    },
+    {
+      "id": "tailwind-merge",
+      "type": "module"
+    },
+    {
+      "id": "frontend/src/lib/ingestion.js",
+      "type": "file"
+    }
+  ],
+  "edges": [
+    {
+      "source": "backend/async_models.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "enum"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "uuid"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy.dialects.postgresql"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/async_models.py",
+      "target": "sqlalchemy.types"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "sys"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "unittest.mock"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "importlib"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "core.config"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "security.auth"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "fastapi.middleware.cors"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "uvicorn"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "middleware.idempotency"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/main.py",
+      "target": "database"
+    },
+    {
+      "source": "backend/schemas.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/async_database.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/async_database.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/async_database.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/async_database.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/async_database.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "uuid"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "enum"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/schemas_v2.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/database.py",
+      "target": "db_models"
+    },
+    {
+      "source": "backend/dynamic_scorer.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/dynamic_scorer.py",
+      "target": "operator"
+    },
+    {
+      "source": "backend/dynamic_scorer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/test_execution.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/test_execution.py",
+      "target": "time"
+    },
+    {
+      "source": "backend/test_execution.py",
+      "target": "fastapi.testclient"
+    },
+    {
+      "source": "backend/test_execution.py",
+      "target": "main"
+    },
+    {
+      "source": "backend/test_gemini.py",
+      "target": "urllib.request"
+    },
+    {
+      "source": "backend/test_gemini.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "langchain_openai"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "langchain_core.prompts"
+    },
+    {
+      "source": "backend/research_agent.py",
+      "target": "tavily"
+    },
+    {
+      "source": "backend/reproduce_import_error.py",
+      "target": "sys"
+    },
+    {
+      "source": "backend/reproduce_import_error.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/reproduce_import_error.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/reproduce_import_error.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/test_engine.py",
+      "target": "fastapi.testclient"
+    },
+    {
+      "source": "backend/test_engine.py",
+      "target": "main"
+    },
+    {
+      "source": "backend/test_engine.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/test_aggregator.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/test_aggregator.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/test_aggregator.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/test_aggregator.py",
+      "target": "services.external_aggregator"
+    },
+    {
+      "source": "backend/test_aggregator.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "enum"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "sqlalchemy.types"
+    },
+    {
+      "source": "backend/db_models.py",
+      "target": "database"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "uuid"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "groq"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "schemas_v2"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "dynamic_scorer"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "services.workflow_engine"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "services.event_bus"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "database"
+    },
+    {
+      "source": "backend/services/decision_studio_core.py",
+      "target": "db_models"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "logging"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/services/external_aggregator.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "math"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "sentence_transformers"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "faiss"
+    },
+    {
+      "source": "backend/services/search_engine.py",
+      "target": "sklearn.feature_extraction.text"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "tavily"
+    },
+    {
+      "source": "backend/services/research_agent.py",
+      "target": "groq"
+    },
+    {
+      "source": "backend/services/execution_engine.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/services/execution_engine.py",
+      "target": "logging"
+    },
+    {
+      "source": "backend/services/execution_engine.py",
+      "target": "xml.etree.ElementTree"
+    },
+    {
+      "source": "backend/services/execution_engine.py",
+      "target": "simpleeval"
+    },
+    {
+      "source": "backend/services/execution_engine.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/services/gst_reconciliation.py",
+      "target": "pandas"
+    },
+    {
+      "source": "backend/services/gst_reconciliation.py",
+      "target": "re"
+    },
+    {
+      "source": "backend/services/gst_reconciliation.py",
+      "target": "difflib"
+    },
+    {
+      "source": "backend/services/gst_reconciliation.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "sys"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "logging.config"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "alembic"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/alembic/env.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/alembic/versions/001_create_core_tables.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/alembic/versions/001_create_core_tables.py",
+      "target": "alembic"
+    },
+    {
+      "source": "backend/alembic/versions/001_create_core_tables.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/alembic/versions/001_create_core_tables.py",
+      "target": "sqlalchemy.dialects"
+    },
+    {
+      "source": "backend/modules/llm_external_analyzer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "pandas"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "joblib"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "xgboost"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "shap"
+    },
+    {
+      "source": "backend/modules/ml_engine.py",
+      "target": "shap"
+    },
+    {
+      "source": "backend/modules/risk_synthesis.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/modules/risk_synthesis.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/llm_five_c_analyzer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "base64"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "re"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "urllib.parse"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "transformers"
+    },
+    {
+      "source": "backend/modules/web_research.py",
+      "target": "bs4"
+    },
+    {
+      "source": "backend/modules/llm_qualitative_analyzer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/llm_qualitative_analyzer.py",
+      "target": "textblob"
+    },
+    {
+      "source": "backend/modules/stress_test.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/feature_store.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/modules/feature_store.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/modules/feature_store.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/feature_store.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/modules/llm_risk_analyzer.py",
+      "target": "re"
+    },
+    {
+      "source": "backend/modules/llm_risk_analyzer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/llm_financial_analyzer.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "base64"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "io"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "re"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "core.config"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "pandas"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "pdfplumber"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "pytesseract"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "pdf2image"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "databricks"
+    },
+    {
+      "source": "backend/modules/ingestion.py",
+      "target": "scipy.stats"
+    },
+    {
+      "source": "backend/databricks_pipeline/gstr_reconciliation.py",
+      "target": "pyspark.sql"
+    },
+    {
+      "source": "backend/databricks_pipeline/gstr_reconciliation.py",
+      "target": "pyspark.sql.functions"
+    },
+    {
+      "source": "backend/core/config.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/core/config.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/core/config.py",
+      "target": "pydantic_settings"
+    },
+    {
+      "source": "backend/core/config.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "logging"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "fastapi.security"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "firebase_admin"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "firebase_admin"
+    },
+    {
+      "source": "backend/security/auth.py",
+      "target": "core.config"
+    },
+    {
+      "source": "backend/middleware/idempotency.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/middleware/idempotency.py",
+      "target": "cachetools"
+    },
+    {
+      "source": "backend/middleware/idempotency.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/middleware/idempotency.py",
+      "target": "starlette.middleware.base"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "datetime"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "logging"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "uuid"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "httpx"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "fastapi.security"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.decision_engine"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.feature_store"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.ingestion"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.ml_engine"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.risk_synthesis"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.stress_test"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.web_research"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "security.auth"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "services.external_aggregator"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "asyncio"
+    },
+    {
+      "source": "backend/routers/analyze.py",
+      "target": "modules.llm_five_c_analyzer"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/applications.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "services.search_engine"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/routers/portfolio.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "__future__"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "uuid"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "typing"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "sqlalchemy"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "sqlalchemy.orm"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "database"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "db_models"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "dynamic_scorer"
+    },
+    {
+      "source": "backend/routers/decisions.py",
+      "target": "schemas_v2"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "fastapi.responses"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "modules.cam_generator"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "utils.pdf_builder"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "routers.analyze"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "async_database"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "sqlalchemy.ext.asyncio"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "sqlalchemy.future"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "async_models"
+    },
+    {
+      "source": "backend/routers/cam.py",
+      "target": "modules.feature_store"
+    },
+    {
+      "source": "backend/routers/research.py",
+      "target": "fastapi"
+    },
+    {
+      "source": "backend/routers/research.py",
+      "target": "pydantic"
+    },
+    {
+      "source": "backend/routers/research.py",
+      "target": "research_agent"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "json"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "pandas"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "sklearn.model_selection"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "sklearn.linear_model"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "sklearn.ensemble"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "sklearn.metrics"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "sklearn.preprocessing"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "joblib"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "warnings"
+    },
+    {
+      "source": "backend/training/train_models.py",
+      "target": "generate_synthetic_data"
+    },
+    {
+      "source": "backend/training/generate_synthetic_data.py",
+      "target": "numpy"
+    },
+    {
+      "source": "backend/training/generate_synthetic_data.py",
+      "target": "pandas"
+    },
+    {
+      "source": "backend/training/generate_synthetic_data.py",
+      "target": "os"
+    },
+    {
+      "source": "backend/training/generate_synthetic_data.py",
+      "target": "json"
+    },
+    {
+      "source": "scripts/repo_analyzer.py",
+      "target": "os"
+    },
+    {
+      "source": "scripts/repo_analyzer.py",
+      "target": "json"
+    },
+    {
+      "source": "scripts/repo_analyzer.py",
+      "target": "re"
+    },
+    {
+      "source": "scripts/diagram_generator.py",
+      "target": "json"
+    },
+    {
+      "source": "scripts/diagram_generator.py",
+      "target": "os"
+    },
+    {
+      "source": "scripts/ai_doc_agent.py",
+      "target": "os"
+    },
+    {
+      "source": "scripts/ai_doc_agent.py",
+      "target": "json"
+    },
+    {
+      "source": "scripts/knowledge_graph.py",
+      "target": "os"
+    },
+    {
+      "source": "scripts/knowledge_graph.py",
+      "target": "ast"
+    },
+    {
+      "source": "scripts/knowledge_graph.py",
+      "target": "json"
+    },
+    {
+      "source": "scripts/knowledge_graph.py",
+      "target": "re"
+    },
+    {
+      "source": "frontend/src/components/FlowStep.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/FlowStep.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/TabsDemo.tsx",
+      "target": "@/components/ui/tabs"
+    },
+    {
+      "source": "frontend/src/components/TabsDemo.tsx",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/DocumentUploader.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/DocumentUploader.js",
+      "target": "react-dropzone"
+    },
+    {
+      "source": "frontend/src/components/DocumentUploader.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/components/HeroSection.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/HeroSection.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/components/HeroSection.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/HeroSection.js",
+      "target": "./ui/Button"
+    },
+    {
+      "source": "frontend/src/components/ScenarioSimulator.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ScenarioSimulator.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/ChatbotWidget.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ChatbotWidget.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/ChatbotWidget.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/ChatbotWidget.js",
+      "target": "@/components/ui/animated-ai-chat"
+    },
+    {
+      "source": "frontend/src/components/FeatureCard.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/FeatureCard.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/components/FeatureCard.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/FlowTimeline.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/FlowTimeline.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/FlowTimeline.js",
+      "target": "./FlowStep"
+    },
+    {
+      "source": "frontend/src/components/NetworkGraph.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/AgentChat.jsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/Providers.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/Providers.js",
+      "target": "@tanstack/react-query"
+    },
+    {
+      "source": "frontend/src/components/Providers.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/components/Providers.js",
+      "target": "@/hooks/useTabSync"
+    },
+    {
+      "source": "frontend/src/components/Providers.js",
+      "target": "@/components/ChatbotWidget"
+    },
+    {
+      "source": "frontend/src/components/SimulationGraph.jsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/RiskGauge.js",
+      "target": "recharts"
+    },
+    {
+      "source": "frontend/src/components/Sidebar.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/Sidebar.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/components/Sidebar.js",
+      "target": "next/link"
+    },
+    {
+      "source": "frontend/src/components/Sidebar.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/components/ShapChart.js",
+      "target": "recharts"
+    },
+    {
+      "source": "frontend/src/components/AnalysisSummary.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/AnalysisSummary.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/AnalysisSummary.js",
+      "target": "@/components/ui/Card"
+    },
+    {
+      "source": "frontend/src/components/AnalysisSummary.js",
+      "target": "@/components/ui/Button"
+    },
+    {
+      "source": "frontend/src/components/modals/DataMappingModal.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/modals/DataMappingModal.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/modals/DataMappingModal.js",
+      "target": "@/store/useWorkflowStore"
+    },
+    {
+      "source": "frontend/src/components/modals/DataMappingModal.js",
+      "target": "@/lib/ingestion"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyConditionNode.jsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyConditionNode.jsx",
+      "target": "@xyflow/react"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyConditionNode.jsx",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyDecisionNode.jsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyDecisionNode.jsx",
+      "target": "@xyflow/react"
+    },
+    {
+      "source": "frontend/src/components/decision-studio/PolicyDecisionNode.jsx",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "target": "@/lib/utils"
+    },
+    {
+      "source": "frontend/src/components/ui/animated-ai-chat.tsx",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/components/ui/Card.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/Card.js",
+      "target": "@/lib/utils"
+    },
+    {
+      "source": "frontend/src/components/ui/tabs.tsx",
+      "target": "@radix-ui/react-tabs"
+    },
+    {
+      "source": "frontend/src/components/ui/tabs.tsx",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/tabs.tsx",
+      "target": "@/lib/utils"
+    },
+    {
+      "source": "frontend/src/components/ui/Badge.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/Badge.js",
+      "target": "class-variance-authority"
+    },
+    {
+      "source": "frontend/src/components/ui/Badge.js",
+      "target": "@/lib/utils"
+    },
+    {
+      "source": "frontend/src/components/ui/demo.tsx",
+      "target": "@/components/ui/animated-ai-chat"
+    },
+    {
+      "source": "frontend/src/components/ui/Button.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/ui/Button.js",
+      "target": "@radix-ui/react-slot"
+    },
+    {
+      "source": "frontend/src/components/ui/Button.js",
+      "target": "class-variance-authority"
+    },
+    {
+      "source": "frontend/src/components/ui/Button.js",
+      "target": "@/lib/utils"
+    },
+    {
+      "source": "frontend/src/components/studio/PropertiesSidebar.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/PropertiesSidebar.js",
+      "target": "@/store/useWorkflowStore"
+    },
+    {
+      "source": "frontend/src/components/studio/NodeLibrary.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/CustomWidgetRenderer.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/Workspace.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/Workspace.js",
+      "target": "@/store/useDecisionStore"
+    },
+    {
+      "source": "frontend/src/components/studio/Workspace.js",
+      "target": "zustand/react/shallow"
+    },
+    {
+      "source": "frontend/src/components/studio/Workspace.js",
+      "target": "./CustomWidgetRenderer"
+    },
+    {
+      "source": "frontend/src/components/studio/Workspace.js",
+      "target": "./NodeSchema"
+    },
+    {
+      "source": "frontend/src/components/studio/ExecutionPanel.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/ExecutionPanel.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/components/studio/nodes.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/components/studio/nodes.js",
+      "target": "reactflow"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "react-dropzone"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "@/components/ui/Card"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "@/components/ui/Button"
+    },
+    {
+      "source": "frontend/src/app/page.js",
+      "target": "@/components/ui/Badge"
+    },
+    {
+      "source": "frontend/src/app/layout.js",
+      "target": "next/font/google"
+    },
+    {
+      "source": "frontend/src/app/layout.js",
+      "target": "@/components/Sidebar"
+    },
+    {
+      "source": "frontend/src/app/layout.js",
+      "target": "@/components/Providers"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "@/components/ui/Card"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "@/components/ui/Badge"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "@/components/ui/Button"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "@/hooks/useIntelligentSearch"
+    },
+    {
+      "source": "frontend/src/app/portfolio/page.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "@/components/ui/Button"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "@/components/ui/Badge"
+    },
+    {
+      "source": "frontend/src/app/pipeline/page.js",
+      "target": "@/components/ui/Card"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/AnalysisSummary"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/AuditTrail"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/RiskGauge"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/ScenarioSimulator"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/ShapChart"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/ui/Card"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/ui/Badge"
+    },
+    {
+      "source": "frontend/src/app/analyze/page.js",
+      "target": "@/components/ui/Button"
+    },
+    {
+      "source": "frontend/src/app/connections/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/connections/page.js",
+      "target": "next/link"
+    },
+    {
+      "source": "frontend/src/app/models/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/models/page.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/app/models/page.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/app/review/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/review/page.js",
+      "target": "../../context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/review/page.js",
+      "target": "next/link"
+    },
+    {
+      "source": "frontend/src/app/review/page.js",
+      "target": "date-fns"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "../../../context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "next/link"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "date-fns"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "react-diff-viewer-continued"
+    },
+    {
+      "source": "frontend/src/app/review/[id]/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/cam-terminal/[id]/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/cam-terminal/[id]/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/cam-terminal/[id]/page.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/cam-terminal/[id]/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/cam-terminal/[id]/layout.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "@/context/AuthContext"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "@/lib/firebase"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "firebase/auth"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "lucide-react"
+    },
+    {
+      "source": "frontend/src/app/login/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/proposal/new/page.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/app/proposal/new/page.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/app/proposal/new/page.js",
+      "target": "framer-motion"
+    },
+    {
+      "source": "frontend/src/app/proposal/new/page.js",
+      "target": "@/components/DocumentUploader"
+    },
+    {
+      "source": "frontend/src/app/proposal/new/page.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/hooks/useTabSync.ts",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/hooks/useTabSync.ts",
+      "target": "../store/useStore"
+    },
+    {
+      "source": "frontend/src/hooks/useIntelligentSearch.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/hooks/useIntelligentSearch.js",
+      "target": "@tanstack/react-query"
+    },
+    {
+      "source": "frontend/src/hooks/useIntelligentSearch.js",
+      "target": "@/lib/api"
+    },
+    {
+      "source": "frontend/src/store/useAppStore.js",
+      "target": "zustand"
+    },
+    {
+      "source": "frontend/src/store/useAppStore.js",
+      "target": "zustand/middleware"
+    },
+    {
+      "source": "frontend/src/store/broadcastMiddleware.ts",
+      "target": "zustand"
+    },
+    {
+      "source": "frontend/src/store/useDecisionStore.ts",
+      "target": "zustand"
+    },
+    {
+      "source": "frontend/src/store/useStore.ts",
+      "target": "zustand"
+    },
+    {
+      "source": "frontend/src/store/useStore.ts",
+      "target": "./broadcastMiddleware"
+    },
+    {
+      "source": "frontend/src/store/useWorkflowStore.js",
+      "target": "zustand"
+    },
+    {
+      "source": "frontend/src/store/useWorkflowStore.js",
+      "target": "reactflow"
+    },
+    {
+      "source": "frontend/src/context/AuthContext.js",
+      "target": "react"
+    },
+    {
+      "source": "frontend/src/context/AuthContext.js",
+      "target": "firebase/auth"
+    },
+    {
+      "source": "frontend/src/context/AuthContext.js",
+      "target": "../lib/firebase"
+    },
+    {
+      "source": "frontend/src/context/AuthContext.js",
+      "target": "next/navigation"
+    },
+    {
+      "source": "frontend/src/lib/api.js",
+      "target": "axios"
+    },
+    {
+      "source": "frontend/src/lib/api.js",
+      "target": "@/lib/ingestion"
+    },
+    {
+      "source": "frontend/src/lib/firebase.js",
+      "target": "firebase/app"
+    },
+    {
+      "source": "frontend/src/lib/firebase.js",
+      "target": "firebase/auth"
+    },
+    {
+      "source": "frontend/src/lib/utils.js",
+      "target": "clsx"
+    },
+    {
+      "source": "frontend/src/lib/utils.js",
+      "target": "tailwind-merge"
+    }
+  ]
+}

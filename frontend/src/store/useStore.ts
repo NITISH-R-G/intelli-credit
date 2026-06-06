@@ -43,6 +43,6 @@ export const useStore = create<AppState>()(
         setWorkflowData: (data) => set({ workflowData: data }),
 
         // Private Synchronizer (3rd arg 'true' intercepts the broadcast middleware loop)
-        __syncState: (payload) => set(payload, false, true as any)
+        __syncState: (payload) => (set as any)(payload, false, true)
     }))
 );

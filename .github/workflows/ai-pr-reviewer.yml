@@ -1,0 +1,39 @@
+name: AI PR Reviewer
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed to get diffs
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Analyze Architectural Changes
+        run: |
+          echo "Detecting if PR modifies core architecture or dependencies..."
+          git diff --name-only origin/main HEAD > changed_files.txt
+          if grep -q "package.json\|requirements.txt\|docker-compose.yml\|backend/models" changed_files.txt; then
+            echo "Architectural changes detected!"
+            echo "ARCH_CHANGED=true" >> $GITHUB_ENV
+          else
+            echo "ARCH_CHANGED=false" >> $GITHUB_ENV
+          fi
+
+      - name: AI Code Review and Breaking Change Detection
+        if: env.ARCH_CHANGED == 'true'
+        uses: coderabbitai/coderabbit-action@v1
+        with:
+          # A sample action integrating an AI reviewer to comment on architectural impact
+          # Realistically, this could also be a custom script using OpenAI API
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: "Analyze the architectural changes in this PR. Identify breaking changes, potential risks, and if the architecture diagram needs updating."
